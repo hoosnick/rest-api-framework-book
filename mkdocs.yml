@@ -1,0 +1,64 @@
+# Project information
+site_name: "REST API FRAMEWORK"
+site_description: 🟢 Guides, Examples, Tutorials
+site_author: Hoosnick
+site_url: https://hoosnick.github.io/rest-api-framework-book
+
+# Repository
+repo_name: hoosnick/rest-api-framework-book
+repo_url: https://github.com/hoosnick/rest-api-framework-book
+
+# Copyright
+copyright: Copyright &copy; 2023 PayTechUz
+
+# Configuration
+theme:
+  name: material
+  language: uz
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      toggle:
+        icon: material/brightness-4
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      toggle:
+        icon: material/brightness-7
+        name: Switch to light mode
+  icon:
+    logo: material/api
+  features:
+    - navigation.expand
+  font:
+    text: Ubuntu
+    code: Roboto Mono
+
+# Extras
+extra:
+  social:
+    - icon: fontawesome/brands/telegram
+      link: https://t.me/+7Gn-JZ99TfgwZDNi
+      name: Telegram
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/hoosnick/rest-api-framework-book
+      name: GitHub
+
+# Extensions
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - meta
+  - attr_list
+  - toc:
+      permalink: true
+
+# Plugins
+plugins:
+  - search:
+      lang:
+        - uz
+        - en
