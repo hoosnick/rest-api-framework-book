@@ -1,0 +1,1700 @@
+
+<!doctype html>
+<html lang="uz" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="🟢 Guides, Examples, Tutorials">
+      
+      
+        <meta name="author" content="Hoosnick">
+      
+      
+        <link rel="canonical" href="https://hoosnick.github.io/rest-api-framework-book/02_work_with_models/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../03_queryset_intro/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.5">
+    
+    
+      
+        <title>Mavzu 2: Modellar bilan ishlash - REST API FRAMEWORK</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6a10b989.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.356b1318.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Ubuntu";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mavzu-2-modellar-bilan-ishlash" class="md-skip">
+          Tarkibga o'tish
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Sarlavha">
+    <a href=".." title="REST API FRAMEWORK" class="md-header__button md-logo" aria-label="REST API FRAMEWORK" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 7H5a2 2 0 0 0-2 2v8h2v-4h2v4h2V9a2 2 0 0 0-2-2m0 4H5V9h2m7-2h-4v10h2v-4h2a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2m0 4h-2V9h2m6 0v6h1v2h-4v-2h1V9h-1V7h4v2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            REST API FRAMEWORK
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Mavzu 2: Modellar bilan ishlash
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Qidirish" placeholder="Qidirish" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Qidirish">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Tozalash" aria-label="Tozalash" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Qidiruv ishga tushirilmoqda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/hoosnick/rest-api-framework-book" title="Repozitoriyga o'tish" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hoosnick/rest-api-framework-book
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigatsiya" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="REST API FRAMEWORK" class="md-nav__button md-logo" aria-label="REST API FRAMEWORK" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 7H5a2 2 0 0 0-2 2v8h2v-4h2v4h2V9a2 2 0 0 0-2-2m0 4H5V9h2m7-2h-4v10h2v-4h2a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2m0 4h-2V9h2m6 0v6h1v2h-4v-2h1V9h-1V7h4v2Z"/></svg>
+
+    </a>
+    REST API FRAMEWORK
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/hoosnick/rest-api-framework-book" title="Repozitoriyga o'tish" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hoosnick/rest-api-framework-book
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Django REST API Framework
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Mavzu 2: Modellar bilan ishlash
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 2: Modellar bilan ishlash
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mundarija">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mundarija
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#reja" class="md-nav__link">
+    Reja:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-bilim" class="md-nav__link">
+    1. Bilim
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Bilim">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-terminlar" class="md-nav__link">
+    1.1 Terminlar
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-oqish-uchun-materiallar" class="md-nav__link">
+    1.2 O'qish uchun materiallar
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-amaliyot-oqituvchi" class="md-nav__link">
+    2. Amaliyot. O'qituvchi
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Amaliyot. O'qituvchi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-create-tuzish" class="md-nav__link">
+    2.1 CREATE - tuzish
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 CREATE - tuzish">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#211-profile-modeli" class="md-nav__link">
+    2.1.1 Profile modeli
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#212-project-modeli" class="md-nav__link">
+    2.1.2 Project modeli
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#213-message-modeli" class="md-nav__link">
+    2.1.3 Message modeli
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#214-skill-modeli" class="md-nav__link">
+    2.1.4 Skill modeli
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#215-review-modeli" class="md-nav__link">
+    2.1.5 Review modeli
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#216-tag-modeli" class="md-nav__link">
+    2.1.6 Tag modeli
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#217-signallar" class="md-nav__link">
+    2.1.7 Signallar
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#218-property" class="md-nav__link">
+    2.1.8 Property
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-modellarni-boglash" class="md-nav__link">
+    2.2 Modellarni bog'lash
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 Modellarni bog'lash">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#221-birga-bir-boglash" class="md-nav__link">
+    2.2.1 Birga bir bog'lash
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#222-birga-kop" class="md-nav__link">
+    2.2.2 Birga ko'p
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2.2 Birga ko'p">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#project-va-review" class="md-nav__link">
+    Project va Review
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profile-va-message" class="md-nav__link">
+    Profile va Message
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profile-va-skill" class="md-nav__link">
+    Profile va Skill
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profile-va-project" class="md-nav__link">
+    Profile va Project
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profile-va-review" class="md-nav__link">
+    Profile va Review
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#223-kopga-kop" class="md-nav__link">
+    2.2.3 Ko'pga ko'p
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-amaliyot-oquvchi" class="md-nav__link">
+    3. Amaliyot. O'quvchi
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03_queryset_intro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 3: QuerySet. Filtr va shartlar bilan ishlash
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04_queryset_methods/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 4: QuerySet qaytaradigan metodlar
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05_queryset_functions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 5: QuerySet. Mantiqiy shartlar va agregat funksiyalar
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06_queryset_outro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 6: QuerySet. QuerySet qaytarmaydigan metodlar
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07_api_intro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 1: API va REST API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08_api_outro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 7: API va REST API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 8: Class View
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10_serializer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 9: Serializer. Pagination. Filtering. Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11_deploy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 10: Deploy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12_auth/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 11: Autentifikatsiya va avtorizatsiya
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mundarija">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mundarija
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#reja" class="md-nav__link">
+    Reja:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-bilim" class="md-nav__link">
+    1. Bilim
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Bilim">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-terminlar" class="md-nav__link">
+    1.1 Terminlar
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-oqish-uchun-materiallar" class="md-nav__link">
+    1.2 O'qish uchun materiallar
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-amaliyot-oqituvchi" class="md-nav__link">
+    2. Amaliyot. O'qituvchi
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Amaliyot. O'qituvchi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-create-tuzish" class="md-nav__link">
+    2.1 CREATE - tuzish
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 CREATE - tuzish">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#211-profile-modeli" class="md-nav__link">
+    2.1.1 Profile modeli
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#212-project-modeli" class="md-nav__link">
+    2.1.2 Project modeli
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#213-message-modeli" class="md-nav__link">
+    2.1.3 Message modeli
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#214-skill-modeli" class="md-nav__link">
+    2.1.4 Skill modeli
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#215-review-modeli" class="md-nav__link">
+    2.1.5 Review modeli
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#216-tag-modeli" class="md-nav__link">
+    2.1.6 Tag modeli
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#217-signallar" class="md-nav__link">
+    2.1.7 Signallar
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#218-property" class="md-nav__link">
+    2.1.8 Property
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-modellarni-boglash" class="md-nav__link">
+    2.2 Modellarni bog'lash
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 Modellarni bog'lash">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#221-birga-bir-boglash" class="md-nav__link">
+    2.2.1 Birga bir bog'lash
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#222-birga-kop" class="md-nav__link">
+    2.2.2 Birga ko'p
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2.2 Birga ko'p">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#project-va-review" class="md-nav__link">
+    Project va Review
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profile-va-message" class="md-nav__link">
+    Profile va Message
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profile-va-skill" class="md-nav__link">
+    Profile va Skill
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profile-va-project" class="md-nav__link">
+    Profile va Project
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profile-va-review" class="md-nav__link">
+    Profile va Review
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#223-kopga-kop" class="md-nav__link">
+    2.2.3 Ko'pga ko'p
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-amaliyot-oquvchi" class="md-nav__link">
+    3. Amaliyot. O'quvchi
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="mavzu-2-modellar-bilan-ishlash">Mavzu 2: Modellar bilan ishlash<a class="headerlink" href="#mavzu-2-modellar-bilan-ishlash" title="Permanent link">&para;</a></h1>
+<h2 id="reja">Reja:<a class="headerlink" href="#reja" title="Permanent link">&para;</a></h2>
+<ol>
+<li><a href="#1-bilim">Bilim</a></li>
+<li><a href="#11-terminlar">1.1 Terminlar</a></li>
+<li><a href="#12-oqish-uchun-materiallar">1.2 O'qish uchun materiallar</a></li>
+<li><a href="#2-amaliyot-oqituvchi">Amaliyot. O'qituvchi</a></li>
+<li><a href="#3-amaliyot-oquvchi">Amaliyot. O'quvchi</a></li>
+</ol>
+<h2 id="1-bilim">1. Bilim<a class="headerlink" href="#1-bilim" title="Permanent link">&para;</a></h2>
+<h3 id="11-terminlar">1.1 Terminlar<a class="headerlink" href="#11-terminlar" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>
+</code></pre></div>
+<h3 id="12-oqish-uchun-materiallar">1.2 O'qish uchun materiallar<a class="headerlink" href="#12-oqish-uchun-materiallar" title="Permanent link">&para;</a></h3>
+<p><a href="https://docs.djangoproject.com/en/4.0/topics/db/models/">https://docs.djangoproject.com/en/4.0/topics/db/models/</a>
+<a href="https://docs.djangoproject.com/en/4.0/topics/files/">https://docs.djangoproject.com/en/4.0/topics/db/models/</a></p>
+<h2 id="2-amaliyot-oqituvchi">2. Amaliyot. O'qituvchi<a class="headerlink" href="#2-amaliyot-oqituvchi" title="Permanent link">&para;</a></h2>
+<p><strong>Reja:</strong></p>
+<ul>
+<li><a href="#21-CREATE---tuzish">2.1 CREATE - tuzish</a></li>
+<li><a href="#211-profile-modeli">2.1.1 Profile modeli</a></li>
+<li><a href="#212-project-modeli">2.1.2 Project modeli</a></li>
+<li><a href="#213-message-modeli">2.1.3 Message modeli</a></li>
+<li><a href="#214-skill-modeli">2.1.4 Skill modeli</a></li>
+<li><a href="#215-review-modeli">2.1.5 Review modeli</a></li>
+<li><a href="#216-tag-modeli">2.1.6 Tag modeli</a></li>
+<li><a href="#217-signallar">2.1.7 Signallar</a></li>
+<li><a href="#218-property">2.1.8 Property</a></li>
+<li><a href="#22-modellarni-boglash">2.2 Modellarni bog'lash</a></li>
+<li><a href="#221-birga-bir">2.2.1 Birga bir</a></li>
+<li><a href="#222-birga-kop">2.2.2 Birga ko'p</a></li>
+<li><a href="#223-kopga-kop">2.2.3 Ko'pga ko'p</a></li>
+</ul>
+<h3 id="21-create-tuzish">2.1 CREATE - tuzish<a class="headerlink" href="#21-create-tuzish" title="Permanent link">&para;</a></h3>
+<p>CREATE bu SQL so'rov tilida jadval tuzish uchun ishlatiladi. Djangoda esa bu modellar orqali amalga oshiriladi. Jadval tuzish uchun qadamlar:</p>
+<ol>
+<li><strong>Ma'lumotlar ba'zasi strukturasi</strong>ni(sxemasi) ishlab chiqish</li>
+<li>Ma'lumotlar strukturasiga qarab <strong>model</strong> yozish</li>
+<li>Makemigration - SQL so'rovga o'xshash buyruqlarni hosil qiladi</li>
+<li>Migrate - uni ma'lumotlar ba'zasiga tadbiq qilish (M: jadval tuzish, CRUD amallarini bajarish)</li>
+</ol>
+<p>O'quvchilar portfoliosi modelini tuzamiz</p>
+<p>Saytda qanday imkoniyatlar bo'lishi kerak:</p>
+<ul>
+<li>O'quvchilar haqida ma'lumot olish</li>
+<li>O'quvchilar loyihasini, kodini ko'rish</li>
+<li>O'quvchiga habar jo'natish</li>
+<li>O'quvchilar ishiga izoh yozish va baho qo'yish</li>
+<li>Loyihalarni teg bo'yicha qidirish</li>
+<li>O'quvchilarning qo'shimcha malakalari haqida ma'lumot olish</li>
+<li>Har bir o'quvchini alohida o'zini sahifasi bo'lsin
+  <br>
+  Ko'rinishi (zip fayl): https://github.com/Oybeklinux/django-beginner/tree/master/resurslar
+  <br>
+  Yuqoridagi imkoniyatlarni hisobga olib, quyidagicha MB sxemasi hosil bo'ladi
+  <br></li>
+</ul>
+<p><img alt="" src="../images/queryset/img_2.png" /></p>
+<p>MB sxemasini ixtiyoriy online instrumentlardan biri yordamida yasaymiz:</p>
+<ul>
+<li>https://www.dbdesigner.net/</li>
+<li>https://sqldbm.com/Home/</li>
+<li>https://dbdiagram.io/home</li>
+</ul>
+<p>MB sxemasini qilib bo'lgach, yangi loyiha ochib, app qo'shib modellarni yozishni boshlaymiz
+<br></p>
+<ol>
+<li>Yangi loyiha ochish</li>
+</ol>
+<div class="highlight"><pre><span></span><code>django-admin startproject students_portfolio
+cd students_portfolio
+python manage.py startapp users
+python manage.py startapp projects
+</code></pre></div>
+<ol>
+<li>users va projects ni ro'yxatdan o'tkazamiz
+   <br>Buning uchun students_portfolio papkasida settings.py fayliga INSTALLED_APPS ga ikkalasini qo'shib qo'yamiz</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;django.contrib.admin&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.auth&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.contenttypes&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.sessions&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.messages&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.staticfiles&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;projects.apps.ProjectsConfig&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;users.apps.UsersConfig&#39;</span>
+<span class="p">]</span>
+</code></pre></div>
+<ol>
+<li>Loyihani ishga tushiramiz</li>
+</ol>
+<div class="highlight"><pre><span></span><code>python manage.py runserver
+</code></pre></div>
+<p>Xatolik bo'lmasa davom etamiz</p>
+<ol>
+<li>Djangoda o'zini foydalanuvchiga bog'liq modellarini ishga tushiramiz.</li>
+</ol>
+<div class="highlight"><pre><span></span><code>python manage.py migrate
+</code></pre></div>
+<ol>
+<li>admin foydalanuvchi qo'shamiz</li>
+</ol>
+<div class="highlight"><pre><span></span><code>python manage.py createsuperuser
+</code></pre></div>
+<ol>
+<li>loyihani ishga tushirib, http://127.0.0.1:8000/admin/ urlga parol login bilan kiramiz. Natijada biz users va groups jadvalini ko'ramiz</li>
+</ol>
+<h4 id="211-profile-modeli">2.1.1 Profile modeli<a class="headerlink" href="#211-profile-modeli" title="Permanent link">&para;</a></h4>
+<ol>
+<li>users/model.py ga kirib, profile modelini yozamiz</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+
+<span class="c1"># Create your models here.</span>
+<span class="k">class</span> <span class="nc">Profile</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">bio</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">location</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">profile_image</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ImageField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s1">&#39;portfolio&#39;</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;empty.png&#39;</span><span class="p">)</span>
+    <span class="n">social_github</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">social_telegram</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">social_instagram</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">social_youtube</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">social_website</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">created</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">auto_now</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<p>Bu yerda:</p>
+<ul>
+<li>Profile foydalanuvchi haqidagi jadvalni modeli/class.</li>
+<li>CharField - uzunligi cheklangan matn uchun</li>
+<li>TextField - uzunligi cheklanmagan matn uchun</li>
+<li>DateField - Sana uchun</li>
+<li>ImageField - rasm uchun</li>
+</ul>
+<p>Parametrlar:</p>
+<ul>
+<li>auto_now_add - sanali toifa uchun ishlatiladi. Yozuv kiritilgan vaqtni belgilaydi</li>
+<li>auto_now - sanali toifa uchun ishlatiladi. Yozuv o'zgargan vaqtni belgilaydi.</li>
+<li>blank - hamma toifa uchun ishlatiladi. Maydonni to'ldirish majburiy yoki majburiy emasligini tekshiradi. Agar True bo'lsa, to'ldirish majburiy emas, aks holda majburiy bo'ladi</li>
+<li>null - hamma toifa uchun ishlatiladi. MBda ushbu maydon Null bo'lishligiga tekshiradi. Agar True bo'lsa Null bo'lishi mumkin</li>
+<li>
+<p>max_length - uzunligini bildiradi. CharField toifasida bu parametrni yozish majburiy</p>
+</li>
+<li>
+<p>Modelni jadvalga aylantiramiz</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code>python manage.py makemigrations
+python manage.py migrate
+</code></pre></div>
+<p>Bu yerda: <br></p>
+<ul>
+<li>makemigrations - Modelni o'qib ilovada migrations katalogida har bir buyruq uhcun alohida faylda (kemta-ket) kod generatsiya qiladi. Keyinchalik uni ishga tushirish uchun</li>
+<li>
+<p>migrate - makemigrations dan hosil bo'lgan kodni ishga tushirib, MBga ta'sir o'tkazadi, ya'ni o'zgartiradi</p>
+</li>
+<li>
+<p>Loyihani ishga tushirib, admin panel dan ko'ring. Jadval ko'rinmaydi. Ko'rinishi uchun admin.py fayliga quyidagini yozamiz</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Profile</span>
+
+<span class="c1"># Admin panelda Profile ni ko&#39;rish uchun</span>
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Profile</span><span class="p">)</span>
+</code></pre></div>
+<p>Admin paneldan Profile ga ma'lumot qo'shamiz. So'ng rasm qayerga yuklanganligiga ahamiyat bering, u loyiha katalogida portfolio katalogini hosil qilib, hamma rasmlarni usha yerga yuklaydi. Agar bu yo'lni o'zgartirmochi bo'lsak, unda keyingi qadamni amalga oshiring</p>
+<ol>
+<li>Rasm, video, fayllarni yuklash yo'lini o'zgartiring. Buning uchun settings.py faylida MEDIA_ROOT o'zgaruvchisiga sizga kerakli yo'lni ko'rsating
+    <br></li>
+</ol>
+<p>Har hil qiymat berib ko'ring:</p>
+<ul>
+<li>MEDIA_ROOT = "". Buni yozmasangiz ham shunday bo'ladi, ya'ni default shunday. Bu holda to'g'ridan to'g'ri ilova katalogini ko'rsatgan bo'lasiz</li>
+<li>MEDIA_ROOT = '/media/'. Bu holda C:/media/ ni ko'rsatgan bo'lasiz</li>
+<li>
+<p>MEDIA_ROOT = os.path.join(BASE_DIR, 'media'). BASE_DIR - ilova katalogi yo'li. os.path.join yo'l yasab beradigan funksiya. Shunday qilib ilovasa media katalogini hosil qilib, yuklanadigan fayllar usha yerga tushadi</p>
+</li>
+<li>
+<p>Ma'lumotlarni qaysi birini to'ldirish shart yoki shart emasligini modelning tegishli hususiyatiga blank=True/False qiymatlarini berib, ishlatib tushunib oling. Djando admin panelda majburiy bo'lsa nomi qalin qilib yozilgan bo'ladi.</p>
+</li>
+<li>
+<p>Admin panelda maydonlar avtomat biron qiymatni olishi uchun modelning tegishli hususiyatiga default=qiymat bering.
+    <br>
+    Kiritilgan ma'lumotlarni ko'ra olasiz, faqat fayllarni hususan rasmni ko'rmoqchi bo'lsangiz quyidagicha habar chiqadi</p>
+</li>
+</ul>
+<p><img alt="" src="../images/queryset/img_3.png" /></p>
+<ol>
+<li>Rasmni url orqali ochish uchun settings.py ga MEDIA_URL = "" o'zgaruvchisini yozamiz</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="n">MEDIA_URL</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</code></pre></div>
+<p>So'ng bu yo'lni urls.py ga ko'rsatib qo'yishimiz kerak, aks holda ochmaydi</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">django.conf.urls.static</span> <span class="kn">import</span> <span class="n">static</span>
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;admin/&#39;</span><span class="p">,</span> <span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">urls</span><span class="p">),</span>
+<span class="p">]</span>
+<span class="c1"># rasm, fayl, videolarni url orqali ochish uchun</span>
+<span class="n">urlpatterns</span> <span class="o">+=</span> <span class="n">static</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_URL</span><span class="p">,</span> <span class="n">document_root</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_ROOT</span><span class="p">)</span>
+</code></pre></div>
+<p>Ishga tushirib rasmlarni ochib ko'ring. MEDIA_URL ni o'zgartirib ko'ring, yana ishga tushirib, rasmlarni oching ba urlga ahamiyat bering. Nima o'zgardi?</p>
+<ol>
+<li>Ushbu Profile modeliga video(eng yaxshi ko'rgan kino), audio (eng yaxshi ko'rgan musiqasi), file(rezyumesi) ni quyidagicha qo'shing:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="n">file</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s1">&#39;files&#39;</span><span class="p">)</span>
+<span class="n">video</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s1">&#39;videos&#39;</span><span class="p">)</span>
+<span class="n">audio</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s1">&#39;audios&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>So'ng uni tadbiq qiling:</p>
+<div class="highlight"><pre><span></span><code>python manage.py makemigrations
+python manage.py migrate
+</code></pre></div>
+<p>Sizda quyidagicha xatolik beradi:</p>
+<p><img alt="" src="../images/queryset/img_4.png" /></p>
+<p>Sababi sizda ma'lumot kiritilgan, siz portfolio jadvaliga yangi ustun qo'shmoqchisiz, lekin kiritilib bo'lingan foydalnuvchilarning video, audio va file qiymati nima bo'ladi? Buni biz modelda belgilamasak, unda bu majburiy bo'ladi va ularga oldindan qiymat berishimiz kerak bo'ladi. Uning ikkita yo'lini ko'ramiz
+<br><br>
+<strong>1-holat</strong>. Har biriga null=True beramiz, ya'ni ular MBda null bo'lishi mumkin degani</p>
+<div class="highlight"><pre><span></span><code><span class="n">file</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s1">&#39;files&#39;</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">video</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s1">&#39;videos&#39;</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">audio</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s1">&#39;audios&#39;</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<p>Ikkinchi holatni ko'rishdan avval oldingi holatni bekor qilamiz. Uning uchun file, video, audio qatorlarini comment qilib, makemigrations, mirate buyruqlarini amalga oshiramiz:</p>
+<div class="highlight"><pre><span></span><code><span class="n">file</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s1">&#39;files&#39;</span><span class="p">)</span>
+<span class="n">video</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s1">&#39;videos&#39;</span><span class="p">)</span>
+<span class="n">audio</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s1">&#39;audios&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>python manage.py makemigrations
+python manage.py migrate
+</code></pre></div>
+<p><br><strong>2-holat</strong>. Har biriga default=qiymat beramiz
+<br>Hozirgi holatda har biriga default=faly ni ko'rsatish, mantiqan xato, lekin kodni tuhsunish uchun qilib ko'ramiz. Mantiqan buni rasm uchun qilish to'g'ri bo'ladi.</p>
+<div class="highlight"><pre><span></span><code><span class="n">file</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s1">&#39;files&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;files/default.docx&#39;</span><span class="p">)</span>
+<span class="n">video</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s1">&#39;videos&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;videos/default.avi&#39;</span><span class="p">)</span>
+<span class="n">audio</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s1">&#39;audios&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;audios/default.mp3&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>Bu 3 fayl berilgan yo'lda albatta bo'lishi shart, yo'q bo'lgan faylni ko'rsatib qo'ymang
+<br><br>
+Har gal model o'zgarganda <strong>esdan chiqmasin</strong> makemigrations va migrate buyruqlarini ishga tushiramiz.</p>
+<div class="highlight"><pre><span></span><code>python manage.py makemigrations
+python manage.py migrate
+</code></pre></div>
+<p><br>Endi ma'lumotlar kiriting. Fayllar qayerga yuklanayotganiga ahamiyat bering. Va yana video, file va audio ni bo'sh qoldiring, keyin esa uni ochib tekshiring.</p>
+<ol>
+<li>E'tibor bering, audio, video, file ga hohlagan fayllarni berishingiz mumkin, endi uni cheklaymiz. Faraz qilamiz rezyumeni ['.pdf', '.doc', '.docx'] formatlarda yuklash kerak. Bu kengaytmalarni tekshiradigan qo'shimcha funksiya yozamiz (validate_file_extension):
+    <br>
+    So'ng shu faylning o'zida bu funksiyani Profile modelining file hususiyatiga validators parametriga ko'rsatib qo'yamiz
+    <br></li>
+</ol>
+<p><strong>models.py</strong></p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">validate_file_extension</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Agar fayl kengaytmasi berilganlarning orasida bo&#39;lmasa, xatolik beradi</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># [0]  yo&#39;li + fayl nomi</span>
+    <span class="c1"># [1] fayl kengaytmasi,: .docx, .jpg</span>
+    <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">name</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">valid_extensions</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;.pdf&#39;</span><span class="p">,</span> <span class="s1">&#39;.doc&#39;</span><span class="p">,</span> <span class="s1">&#39;.docx&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">valid_extensions</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s1">&#39;Unsupported file extension.&#39;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Profile</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">bio</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">location</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">profile_image</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ImageField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s1">&#39;portfolio&#39;</span><span class="p">)</span>
+    <span class="n">social_github</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">social_telegram</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">social_instagram</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;instagram&quot;</span><span class="p">)</span>
+    <span class="n">social_youtube</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">social_website</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">created</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">file</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s1">&#39;files&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;files/default.xlsx&#39;</span><span class="p">,</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">validate_file_extension</span><span class="p">])</span>
+    <span class="n">video</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s1">&#39;videos&#39;</span><span class="p">)</span>
+    <span class="n">audio</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s1">&#39;audios&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>Kodni yozib bo'lgach ishga tushiramiz. file ga xato fayl kiritamiz, natija quyidagicha bo'ladi:</p>
+<p><img alt="" src="../images/queryset/img_5.png" /></p>
+<p><strong>*Vazifa:</strong></p>
+<ol>
+<li>Huddi shunday funksiyani video va mp3 larga yozib chiqing</li>
+<li>
+<p>Bir nechta ma'lumot kiriting:</p>
+</li>
+<li>
+<p>Django admin paneli yordamida</p>
+</li>
+<li>DB Browser yordamida</li>
+<li>Exceldagi ma'lumotni csv formotda saqlab, DB Browserdan import qiling</li>
+</ol>
+<h4 id="212-project-modeli">2.1.2 Project modeli<a class="headerlink" href="#212-project-modeli" title="Permanent link">&para;</a></h4>
+<p>Project jadvalida o'quvchilar qilgan loyiha haqida ma'lumotlar saqlanadi</p>
+<p><img alt="" src="../images/queryset/img_6.png" /></p>
+<p>User modeli Django modeli, Profile modelini tuzdik, endi Project modelini yozamiz</p>
+<p><strong>Vazifa:</strong> 17. projects/models.py faylida Project modelini yozib, uni tadbiq qiling:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+
+<span class="k">class</span> <span class="nc">Project</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># Majburiy</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Majburiy emas</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ImageField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s1">&#39;projects&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;projects/empty.png&#39;</span><span class="p">)</span>
+    <span class="n">demo_link</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">source_code</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">vote_count</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">vote_ratio</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">created</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>python manage.py makemigrations
+python manage.py migrate
+</code></pre></div>
+<p>Bu yerda:</p>
+<ul>
+<li>IntegerField - butun sonlar uchun</li>
+</ul>
+<h4 id="213-message-modeli">2.1.3 Message modeli<a class="headerlink" href="#213-message-modeli" title="Permanent link">&para;</a></h4>
+<p>Message jadvalida o'quvchiga yuboriladigan habarlar saqlanadi
+<br></p>
+<ol>
+<li>projects/models.py faylida Message modelini yozib, uni tadbiq qiling:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+
+<span class="k">class</span> <span class="nc">Message</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
+    <span class="n">created</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>python manage.py makemigrations
+python manage.py migrate
+</code></pre></div>
+<h4 id="214-skill-modeli">2.1.4 Skill modeli<a class="headerlink" href="#214-skill-modeli" title="Permanent link">&para;</a></h4>
+<p>Skill jadvalida o'quvchilarning qo'shimcha malakasi haqida ma'lumotlari saqlanadi
+<br> 19. projects/models.py faylida Skill modelini yozib, uni tadbiq qiling:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+<span class="c1">#  ...</span>
+
+<span class="k">class</span> <span class="nc">Skill</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
+    <span class="n">created</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>python manage.py makemigrations
+python manage.py migrate
+</code></pre></div>
+<h4 id="215-review-modeli">2.1.5 Review modeli<a class="headerlink" href="#215-review-modeli" title="Permanent link">&para;</a></h4>
+<p>Review jadvalida mijozlarning o'quvchining loyihasiga berilgan izohi va bahosi saqlanadi
+<br></p>
+<ol>
+<li>projects/models.py faylida Review modelini yozib, uni tadbiq qiling:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+<span class="c1">#  ...</span>
+
+<span class="k">class</span> <span class="nc">Review</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">created</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>python manage.py makemigrations
+python manage.py migrate
+</code></pre></div>
+<h4 id="216-tag-modeli">2.1.6 Tag modeli<a class="headerlink" href="#216-tag-modeli" title="Permanent link">&para;</a></h4>
+<p>Tag jadvalida o'quvchining loyihasida nima texnologiyalar, qaysi dasturlash tillari, qaysi freymwork ishlatilganligi haqida teg (ma'lumotlar) saqlanadi
+<br></p>
+<ol>
+<li>projects/models.py faylida Tag modelini yozib, uni tadbiq qiling:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+<span class="c1">#  ...</span>
+
+<span class="k">class</span> <span class="nc">Tag</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">created</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>python manage.py makemigrations
+python manage.py migrate
+</code></pre></div>
+<h4 id="217-signallar">2.1.7 Signallar<a class="headerlink" href="#217-signallar" title="Permanent link">&para;</a></h4>
+<p><a href="https://docs.djangoproject.com/en/4.1/topics/signals/">Signal bo'yicha hujjat</a>
+<a href="https://docs.djangoproject.com/en/4.1/ref/signals/#django.db.models.signals.pre_save">Signal turlari</a>
+<br>
+Videolar:</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=K5RQUFW0ePA&amp;list=PLZ67NWgKA8g7b-o4w5bm3B4fngZ2ug959&amp;index=48">Signal. Post save</a></li>
+<li><a href="https://www.youtube.com/watch?v=QtF4e-OL3UQ&amp;list=PLZ67NWgKA8g7b-o4w5bm3B4fngZ2ug959&amp;index=48">Signal. Post delete</a></li>
+<li><a href="https://www.youtube.com/watch?v=AB0no6Bx3uY&amp;list=PLZ67NWgKA8g7b-o4w5bm3B4fngZ2ug959&amp;index=49">Signal. Receiver dekoratori</a></li>
+</ul>
+<p>Masala 1.Ro'yxatdan o'tgan foydalanuvchi user jadvaliga qo'shiladi. Bu foydalanuvchi avtomat Profile jadvaliga ham qo'shilsin. Masalani amalga oshirish uchun signallardan foydalanamiz.
+Chunki signallar orqali biz yangi yozuv kiritilganligi yoki o'chirilganligi yoki o'zgartirilganligi va boshqalarni bila olamiz
+<br>
+Endi user/models.py ga quyidagi signalni yozamiz.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+<span class="kn">from</span> <span class="nn">django.db.models.signals</span> <span class="kn">import</span> <span class="n">post_save</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+<span class="k">class</span> <span class="nc">Profile</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+
+<span class="k">def</span> <span class="nf">create_profile</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">created</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">instance</span>
+    <span class="k">if</span> <span class="n">created</span><span class="p">:</span>
+        <span class="n">Profile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">user</span><span class="o">=</span><span class="n">user</span>
+        <span class="p">)</span>
+
+
+<span class="n">post_save</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">create_profile</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="n">User</span><span class="p">)</span>
+</code></pre></div>
+<p>Masala 2. Profile o'chirilganda mos bo'lgan User jadvalidagi foydalanuvchi o'chirilsin. Buning uchun post_delete dan foydalanamiz</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.db.models.signals</span> <span class="kn">import</span> <span class="n">post_save</span><span class="p">,</span> <span class="n">post_delete</span>
+
+
+<span class="k">def</span> <span class="nf">delete_user</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">user</span>
+    <span class="n">user</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+
+
+<span class="n">post_delete</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">delete_user</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="n">Profile</span><span class="p">)</span>
+</code></pre></div>
+<p>Yuqoridagi ikki masalani dekoratorlar bilan yozsak ham bo'ladi:
+<br></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.db.models.signals</span> <span class="kn">import</span> <span class="n">post_save</span><span class="p">,</span> <span class="n">post_delete</span>
+<span class="kn">from</span> <span class="nn">django.dispatch</span> <span class="kn">import</span> <span class="n">receiver</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+
+<span class="k">class</span> <span class="nc">Profile</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+
+    <span class="c1"># ...</span>
+
+<span class="nd">@receiver</span><span class="p">(</span><span class="n">post_save</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="n">User</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">create_profile</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">created</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">instance</span>
+    <span class="k">if</span> <span class="n">created</span><span class="p">:</span>
+        <span class="n">Profile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">user</span><span class="o">=</span><span class="n">user</span>
+        <span class="p">)</span>
+
+
+<span class="nd">@receiver</span><span class="p">(</span><span class="n">post_delete</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="n">Profile</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">delete_user</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">user</span>
+    <span class="n">user</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+</code></pre></div>
+<h4 id="218-property">2.1.8 Property<a class="headerlink" href="#218-property" title="Permanent link">&para;</a></h4>
+<p>Masala. Foydalanuvchi loyihaga 'Yoqdi' yoki 'Yoqmadi' yugmasini bosganda dastur o'zi bazadagi vote_count va vote_ratio qiymatlarini hisoblab yangilab qo'ysin.
+Funksiya o'zi hisoblaydi, tashqaridan o'zgartirilmaydi, shuning uchun property dekoratoridan foydalansak bo'ladi</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">users.models</span> <span class="kn">import</span> <span class="n">Profile</span>
+
+
+<span class="k">class</span> <span class="nc">Project</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">update_vote_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">reviews</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">review_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">reviews</span><span class="p">)</span>
+        <span class="n">upVotes</span> <span class="o">=</span> <span class="n">reviews</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+        <span class="n">totalVotes</span> <span class="o">=</span> <span class="n">reviews</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+
+        <span class="n">ratio</span> <span class="o">=</span> <span class="p">(</span><span class="n">upVotes</span> <span class="o">/</span> <span class="n">totalVotes</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vote_count</span> <span class="o">=</span> <span class="n">totalVotes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vote_ratio</span> <span class="o">=</span> <span class="n">ratio</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</code></pre></div>
+<p>Foydalanuvchi har gal ovoz bergandan keyin bu hususiaytni chaqirsak, bazadagi vote_count va total_ratio ni yangilab qo'yadi</p>
+<h3 id="22-modellarni-boglash">2.2 Modellarni bog'lash<a class="headerlink" href="#22-modellarni-boglash" title="Permanent link">&para;</a></h3>
+<p>Modellarimiz tayyor bo'ldi. Endi ularni MB sxemasiga qarab o'zaro bog'laymiz. Relatsion MBda quyidagicha bog'lash turlari mavjud:</p>
+<ul>
+<li>Birga bir</li>
+<li>Birga ko'p</li>
+<li>Ko'pga ko'p</li>
+</ul>
+<h4 id="221-birga-bir-boglash">2.2.1 Birga bir bog'lash<a class="headerlink" href="#221-birga-bir-boglash" title="Permanent link">&para;</a></h4>
+<p><img alt="" src="../images/queryset/img_2.png" /></p>
+<p>Rasmga qaraymiz va birga bir bog'lanishlarni topamiz:
+U profil bilan user modelidir. Chunki bizning holatda bitta foydalnuvchiga bitta profil to'g'ri keladi</p>
+<ol>
+<li>Profile modelini Django ning User modeli bilan bog'laymiz:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+
+<span class="c1"># ...</span>
+
+<span class="k">class</span> <span class="nc">Profile</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">OneToOneField</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># ...</span>
+</code></pre></div>
+<p>Bu yerda:<br>
+on_delete - Primary Key joylashgan jadvaldan yozuv o'chganda Foreign Key joylashgan jadvaldagi yozuv nima bo'lishini bildiradi.</p>
+<ul>
+<li>models.CASCADE - Profile dagi usha foydalnuvchini o'chiradi.</li>
+<li>models.SET_NULL - Profile dagi user maydonini NULL qiymati bilan o'zgartirib qo'yadi. Bu holatda null=True ko'rsatilgan bo'lishi kerak</li>
+<li>models.SET_DEFAULT - Profile dagi user maydonini default qiymat bilan o'zgartirib qo'yadi. Bu holatda default ko'rsatilgan bo'lishi kerak</li>
+</ul>
+<p><br>Endi uni tadbiq qilamiz</p>
+<div class="highlight"><pre><span></span><code>python manage.py makemigrations
+python manage.py migrate
+</code></pre></div>
+<p>Edni loyihani ishga tushirib, user jadvaliga bir nechta foydalanuvchi qo'shib, profile jadvalidan foydalanuvchini ko'rsatib saqlang. Shunda qaysi profil qaysi foydalanuvchiga tegishli ekanligi ma'lum bo'ladi</p>
+<h4 id="222-birga-kop">2.2.2 Birga ko'p<a class="headerlink" href="#222-birga-kop" title="Permanent link">&para;</a></h4>
+<ol>
+<li>
+<p>Rasmga qarab birga ko'p bog'lanishlarni topishga harakat qilamiz</p>
+</li>
+<li>
+<p>Project va Review</p>
+</li>
+<li>Profile va Message</li>
+<li>Profile va Skill</li>
+<li>Profile va Project</li>
+<li>Profile va Review</li>
+</ol>
+<p><br>
+Bularning orasida qanday bog'lanish bor?
+<br></p>
+<p>Har bitta bog'lanishni ko'rib chiqamiz:
+- Project va Review. Bitta loyihaga bir nechta izoh qoldirish mumkin 
+- Profile va Message. Bitta foydalanuvchiga bir nechta habar jo'natish mumkin. 
+- Profile va Skill.  Bitta foydalanuvchini bir nechta malakasi bo'lishi mumkin
+- Profile va Project. Bitta foydalanuvchini bir nechta loyihasi bo'lishi mumkin
+- Profile va Review. Bitta foydalanuvchi loyihaga/loyihalarga bir nechta izoh qoldirishi mumkin</p>
+<p>Endi har birini modelda yozib chiqamiz <br></p>
+<h5 id="project-va-review">Project va Review<a class="headerlink" href="#project-va-review" title="Permanent link">&para;</a></h5>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">users.models</span> <span class="kn">import</span> <span class="n">Profile</span>
+
+<span class="k">class</span> <span class="nc">Review</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># Foreign key</span>
+    <span class="n">project</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Project</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">SET_NULL</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<p>So'ng tadbiq qilamiz</p>
+<div class="highlight"><pre><span></span><code>python manage.py makemigrations
+python manage.py migrate
+</code></pre></div>
+<h5 id="profile-va-message">Profile va Message<a class="headerlink" href="#profile-va-message" title="Permanent link">&para;</a></h5>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">users.models</span> <span class="kn">import</span> <span class="n">Profile</span>
+
+<span class="c1"># ...</span>
+
+<span class="k">class</span> <span class="nc">Message</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
+    <span class="n">created</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">sender</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Profile</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">SET_NULL</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s2">&quot;sender_message&quot;</span><span class="p">)</span>
+    <span class="n">receiver</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Profile</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">SET_NULL</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s2">&quot;receiver_message&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>Bu yerda related_name - bu nom bilan keyinchalik boshqa (Profile) jadvaldan tegishli ma'lumotlarni olish mumkin bo'ladi. Bizda Profile bilan bir paytda ikki bog'lanish bo'lgani uchun Django ularni farqlash uchun related_name ga farqli qiymat berishni talab qiladi. Shuning uchun ularga ikki hil nom berib yozib qo'ydik</p>
+<div class="highlight"><pre><span></span><code>python manage.py makemigrations
+python manage.py migrate
+</code></pre></div>
+<h5 id="profile-va-skill">Profile va Skill<a class="headerlink" href="#profile-va-skill" title="Permanent link">&para;</a></h5>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">users.models</span> <span class="kn">import</span> <span class="n">Profile</span>
+
+<span class="c1"># ...</span>
+
+<span class="k">class</span> <span class="nc">Skill</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
+    <span class="n">created</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Foreign Key</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Profile</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">SET_NULL</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<p>So'ng tadbiq qilamiz</p>
+<div class="highlight"><pre><span></span><code>python manage.py makemigrations
+python manage.py migrate
+</code></pre></div>
+<h5 id="profile-va-project">Profile va Project<a class="headerlink" href="#profile-va-project" title="Permanent link">&para;</a></h5>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">users.models</span> <span class="kn">import</span> <span class="n">Profile</span>
+
+<span class="k">class</span> <span class="nc">Project</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># Majburiy</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Majburiy emas</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ImageField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s1">&#39;projects&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;projects/empty.png&#39;</span><span class="p">)</span>
+    <span class="n">demo_link</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">source_code</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">vote_count</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">vote_ratio</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">created</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Foreign Key</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Profile</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">SET_NULL</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<p>So'ng tadbiq qilamiz</p>
+<div class="highlight"><pre><span></span><code>python manage.py makemigrations
+python manage.py migrate
+</code></pre></div>
+<h5 id="profile-va-review">Profile va Review<a class="headerlink" href="#profile-va-review" title="Permanent link">&para;</a></h5>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">users.models</span> <span class="kn">import</span> <span class="n">Profile</span>
+
+<span class="k">class</span> <span class="nc">Review</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># Foreign Key</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Profile</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">SET_NULL</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Foreign Key</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Profile</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">SET_NULL</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<p>So'ng tadbiq qilamiz</p>
+<div class="highlight"><pre><span></span><code>python manage.py makemigrations
+python manage.py migrate
+</code></pre></div>
+<h4 id="223-kopga-kop">2.2.3 Ko'pga ko'p<a class="headerlink" href="#223-kopga-kop" title="Permanent link">&para;</a></h4>
+<p><img alt="" src="../images/queryset/img_2.png" /></p>
+<p>Rasmga qaraymiz. Ko'pga-ko'p bog'lanish qayerda bor?
+<br></p>
+<p>Project va Tag orasida ko'pga ko'p bog'lanish bor
+<br></p>
+<p><img alt="" src="../images/queryset/img_8.png" /></p>
+<p>Ya'ni bitta loyiha bir paytda bir nechta tegga tegishli bo'lishi mumkin (M: Django, React). O'z navbatida bitta teg bir nechta loyihaga tegishli bo'lishi mumkin. Masalan React frameworkda 4 ta loyiha bo'lishi mumkin. Mana shu ko'pga ko'p bog'lanishdir. Uni amalga oshirish SQLda qo'shimcha 3-jadval qo'shiladi. Django buni models.ManyToManyField toifasi yordamida o'zi amalga oshiradi.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">users.models</span> <span class="kn">import</span> <span class="n">Profile</span>
+
+
+<span class="k">class</span> <span class="nc">Project</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># Majburiy</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Majburiy emas</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ImageField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s1">&#39;projects&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;projects/empty.png&#39;</span><span class="p">)</span>
+    <span class="n">demo_link</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">source_code</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">vote_count</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">vote_ratio</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">created</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Profile</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">SET_NULL</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Ko&#39;pga ko&#39;p bog&#39;lanish</span>
+    <span class="n">tag</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ManyToManyField</span><span class="p">(</span><span class="s1">&#39;Tag&#39;</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s2">&quot;project_tag&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>So'ng tadbiq qilamiz</p>
+<div class="highlight"><pre><span></span><code>python manage.py makemigrations
+python manage.py migrate
+</code></pre></div>
+<p>Endi loyihani ishga tushirib har bir jadvalga to'liq ma'lumot kiritib chiqamiz. Keyingi dars CRUD amallarini ko'ramiz</p>
+<h2 id="3-amaliyot-oquvchi">3. Amaliyot. O'quvchi<a class="headerlink" href="#3-amaliyot-oquvchi" title="Permanent link">&para;</a></h2>
+<p>Quyidagi loyihalarning MB sxemalarini, so'ng modellarini tuzing:</p>
+<ol>
+<li>Restoran sahifasi uchun <a href="https://app.dbdesigner.net/">saytlardan</a> foydalanib MB sxemalasini tuzib, so'ng Djangoda loyiha ochib, ilova qo'shib, modellarini tuzing
+   <a href="https://997926933shoh.github.io/ADANA_KEBAB/#include">Sayt</a></li>
+<li>Flakonlar sahifasi uchun mos ravishda MB sxemalasi, loyiha, ilova va modellarni tuzing
+   <a href="https://ru.flakon.uz/">Sayt</a></li>
+<li>Fast food sahifasi uchun mos ravishda MB sxemalasi, loyiha, ilova va modellarni tuzing
+   <a href="https://buddyburger.kannas.uz/">Sayt</a></li>
+<li>O'quvchilarni bor/yo'q qilish sahifasi uchun quyidagi funksiyalarga qarab, o'zingiz o'ylab ko'ring qanday MB sxemalasi bo'ladi, loyiha, ilova va modellarni tuzing.
+   <br></li>
+</ol>
+<p>Funksiyalar:</p>
+<ul>
+<li>O'quvchilarni bor/yo'q deb belgi qo'yish</li>
+<li>Uyga vazifani bajardi/bajarmadi deb belgi qo'yish</li>
+<li>Har bir o'qituvchini o'zini alohida sahifasi bo'lsin</li>
+<li>O'qituvchi kirganda faqat o'zini guruhini ko'rsin</li>
+<li>Har darsni ohirida o'quvchilar ota-onasiga avtomat SMS habar jo'natilsin</li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2023 PayTechUz
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://t.me/+7Gn-JZ99TfgwZDNi" target="_blank" rel="noopener" title="Telegram" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M248 8C111.033 8 0 119.033 0 256s111.033 248 248 248 248-111.033 248-248S384.967 8 248 8Zm114.952 168.66c-3.732 39.215-19.881 134.378-28.1 178.3-3.476 18.584-10.322 24.816-16.948 25.425-14.4 1.326-25.338-9.517-39.287-18.661-21.827-14.308-34.158-23.215-55.346-37.177-24.485-16.135-8.612-25 5.342-39.5 3.652-3.793 67.107-61.51 68.335-66.746.153-.655.3-3.1-1.154-4.384s-3.59-.849-5.135-.5q-3.283.746-104.608 69.142-14.845 10.194-26.894 9.934c-8.855-.191-25.888-5.006-38.551-9.123-15.531-5.048-27.875-7.717-26.8-16.291q.84-6.7 18.45-13.7 108.446-47.248 144.628-62.3c68.872-28.647 83.183-33.623 92.511-33.789 2.052-.034 6.639.474 9.61 2.885a10.452 10.452 0 0 1 3.53 6.716 43.765 43.765 0 0 1 .417 9.769Z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://github.com/hoosnick/rest-api-framework-book" target="_blank" rel="noopener" title="GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand"], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Buferga nusxalandi", "clipboard.copy": "Buferga nusxalash", "search.result.more.one": "Ushbu sahifada yana 1 ta natija", "search.result.more.other": "Bu sahifada yana # ta natija", "search.result.none": "Mos natijalar yo\u0027q", "search.result.one": "1 ta mos natija", "search.result.other": "# ta mos keladigan natijalar", "search.result.placeholder": "Qidiruvni boshlash uchun kiriting", "search.result.term.missing": "To\u0027ldirilmagan", "select.version": "Versiyani tanlang"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.aecac24b.min.js"></script>
+      
+    
+  </body>
+</html>

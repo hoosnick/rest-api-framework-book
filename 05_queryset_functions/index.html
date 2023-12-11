@@ -1,0 +1,1214 @@
+
+<!doctype html>
+<html lang="uz" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="🟢 Guides, Examples, Tutorials">
+      
+      
+        <meta name="author" content="Hoosnick">
+      
+      
+        <link rel="canonical" href="https://hoosnick.github.io/rest-api-framework-book/05_queryset_functions/">
+      
+      
+        <link rel="prev" href="../04_queryset_methods/">
+      
+      
+        <link rel="next" href="../06_queryset_outro/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.5">
+    
+    
+      
+        <title>Mavzu 5: QuerySet. Mantiqiy shartlar va agregat funksiyalar - REST API FRAMEWORK</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6a10b989.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.356b1318.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Ubuntu";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mavzu-5-queryset-mantiqiy-shartlar-va-agregat-funksiyalar" class="md-skip">
+          Tarkibga o'tish
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Sarlavha">
+    <a href=".." title="REST API FRAMEWORK" class="md-header__button md-logo" aria-label="REST API FRAMEWORK" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 7H5a2 2 0 0 0-2 2v8h2v-4h2v4h2V9a2 2 0 0 0-2-2m0 4H5V9h2m7-2h-4v10h2v-4h2a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2m0 4h-2V9h2m6 0v6h1v2h-4v-2h1V9h-1V7h4v2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            REST API FRAMEWORK
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Mavzu 5: QuerySet. Mantiqiy shartlar va agregat funksiyalar
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Qidirish" placeholder="Qidirish" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Qidirish">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Tozalash" aria-label="Tozalash" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Qidiruv ishga tushirilmoqda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/hoosnick/rest-api-framework-book" title="Repozitoriyga o'tish" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hoosnick/rest-api-framework-book
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigatsiya" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="REST API FRAMEWORK" class="md-nav__button md-logo" aria-label="REST API FRAMEWORK" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 7H5a2 2 0 0 0-2 2v8h2v-4h2v4h2V9a2 2 0 0 0-2-2m0 4H5V9h2m7-2h-4v10h2v-4h2a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2m0 4h-2V9h2m6 0v6h1v2h-4v-2h1V9h-1V7h4v2Z"/></svg>
+
+    </a>
+    REST API FRAMEWORK
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/hoosnick/rest-api-framework-book" title="Repozitoriyga o'tish" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hoosnick/rest-api-framework-book
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Django REST API Framework
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02_work_with_models/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 2: Modellar bilan ishlash
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03_queryset_intro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 3: QuerySet. Filtr va shartlar bilan ishlash
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04_queryset_methods/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 4: QuerySet qaytaradigan metodlar
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Mavzu 5: QuerySet. Mantiqiy shartlar va agregat funksiyalar
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 5: QuerySet. Mantiqiy shartlar va agregat funksiyalar
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mundarija">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mundarija
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#reja" class="md-nav__link">
+    Reja:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-bilim" class="md-nav__link">
+    1. Bilim
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Bilim">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-terminlar" class="md-nav__link">
+    1.1 Terminlar
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-amaliyot-oqituvchi" class="md-nav__link">
+    2. Amaliyot. O'qituvchi
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Amaliyot. O'qituvchi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-shartlar-bilan-ishlash" class="md-nav__link">
+    2.1 Shartlar bilan ishlash
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 Shartlar bilan ishlash">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#211-mantiqiy-or" class="md-nav__link">
+    2.1.1 Mantiqiy OR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#212-mantiqiy-and" class="md-nav__link">
+    2.1.2 Mantiqiy AND
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-agregat-funksiyalar" class="md-nav__link">
+    2.2 Agregat funksiyalar
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 Agregat funksiyalar">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#221-count" class="md-nav__link">
+    2.2.1 Count
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2.1 Count">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#endi-malum-guruhga-tegishli-qiymatlar-sonini-aniqlashni-koramiz" class="md-nav__link">
+    Endi ma'lum guruhga tegishli qiymatlar sonini aniqlashni ko'ramiz
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#222-avg" class="md-nav__link">
+    2.2.2 Avg
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#223-min" class="md-nav__link">
+    2.2.3 Min
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#224-max" class="md-nav__link">
+    2.2.4 Max
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#225-sum" class="md-nav__link">
+    2.2.5 Sum
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2.5 Sum">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#birga-kop-boglanishda-agregat-funskiyalar" class="md-nav__link">
+    Birga ko'p bog'lanishda agregat funskiyalar
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-amaliyot-oquvchi" class="md-nav__link">
+    3. Amaliyot. O'quvchi
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06_queryset_outro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 6: QuerySet. QuerySet qaytarmaydigan metodlar
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07_api_intro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 1: API va REST API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08_api_outro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 7: API va REST API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 8: Class View
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10_serializer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 9: Serializer. Pagination. Filtering. Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11_deploy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 10: Deploy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12_auth/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 11: Autentifikatsiya va avtorizatsiya
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mundarija">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mundarija
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#reja" class="md-nav__link">
+    Reja:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-bilim" class="md-nav__link">
+    1. Bilim
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Bilim">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-terminlar" class="md-nav__link">
+    1.1 Terminlar
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-amaliyot-oqituvchi" class="md-nav__link">
+    2. Amaliyot. O'qituvchi
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Amaliyot. O'qituvchi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-shartlar-bilan-ishlash" class="md-nav__link">
+    2.1 Shartlar bilan ishlash
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 Shartlar bilan ishlash">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#211-mantiqiy-or" class="md-nav__link">
+    2.1.1 Mantiqiy OR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#212-mantiqiy-and" class="md-nav__link">
+    2.1.2 Mantiqiy AND
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-agregat-funksiyalar" class="md-nav__link">
+    2.2 Agregat funksiyalar
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 Agregat funksiyalar">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#221-count" class="md-nav__link">
+    2.2.1 Count
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2.1 Count">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#endi-malum-guruhga-tegishli-qiymatlar-sonini-aniqlashni-koramiz" class="md-nav__link">
+    Endi ma'lum guruhga tegishli qiymatlar sonini aniqlashni ko'ramiz
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#222-avg" class="md-nav__link">
+    2.2.2 Avg
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#223-min" class="md-nav__link">
+    2.2.3 Min
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#224-max" class="md-nav__link">
+    2.2.4 Max
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#225-sum" class="md-nav__link">
+    2.2.5 Sum
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2.5 Sum">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#birga-kop-boglanishda-agregat-funskiyalar" class="md-nav__link">
+    Birga ko'p bog'lanishda agregat funskiyalar
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-amaliyot-oquvchi" class="md-nav__link">
+    3. Amaliyot. O'quvchi
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="mavzu-5-queryset-mantiqiy-shartlar-va-agregat-funksiyalar">Mavzu 5: QuerySet. Mantiqiy shartlar va agregat funksiyalar<a class="headerlink" href="#mavzu-5-queryset-mantiqiy-shartlar-va-agregat-funksiyalar" title="Permanent link">&para;</a></h1>
+<h2 id="reja">Reja:<a class="headerlink" href="#reja" title="Permanent link">&para;</a></h2>
+<ol>
+<li><a href="#1-bilim">Bilim</a></li>
+<li><a href="#11-terminlar">1.1 Terminlar</a></li>
+<li><a href="#12-oqish-uchun-materiallar">1.2 O'qish uchun materiallar</a></li>
+<li><a href="#2-amaliyot-oqituvchi">Amaliyot. O'qituvchi</a></li>
+<li><a href="#3-amaliyot-oquvchi">Amaliyot. O'quvchi</a></li>
+</ol>
+<h2 id="1-bilim">1. Bilim<a class="headerlink" href="#1-bilim" title="Permanent link">&para;</a></h2>
+<h3 id="11-terminlar">1.1 Terminlar<a class="headerlink" href="#11-terminlar" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>
+</code></pre></div>
+<h2 id="2-amaliyot-oqituvchi">2. Amaliyot. O'qituvchi<a class="headerlink" href="#2-amaliyot-oqituvchi" title="Permanent link">&para;</a></h2>
+<p><strong>Reja:</strong></p>
+<ul>
+<li>[2.1 Shartlar bilan ishlash]</li>
+<li>[2.1.1 Mantiqiy OR]</li>
+<li>[2.1.1 Mantiqiy AND]</li>
+<li>[2.2 Agregat funksiyalar]</li>
+<li>[2.2.1 Count]</li>
+<li>[2.2.2 Avg]</li>
+<li>[2.2.3 Min]</li>
+<li>[2.2.4 Max]</li>
+<li>[2.2.5 Sum]</li>
+</ul>
+<p><img alt="" src="../images/queryset/img_6.png" /></p>
+<h3 id="21-shartlar-bilan-ishlash">2.1 Shartlar bilan ishlash<a class="headerlink" href="#21-shartlar-bilan-ishlash" title="Permanent link">&para;</a></h3>
+<h4 id="211-mantiqiy-or">2.1.1 Mantiqiy OR<a class="headerlink" href="#211-mantiqiy-or" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Loyiha nomida IT yoki .uz so'zlari bo'lgan loyihalar ro'yxatini chiqaring</li>
+</ol>
+<p>1-usul</p>
+
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; Project.objects.filter(title__icontains=&#39;it&#39;) | Project.objects.filter(title__icontains=&#39;.uz&#39;)
+
+&lt;QuerySet [&lt;Project: IT Academy online ta&#39;lim&gt;, &lt;Project: ePark.uz&gt;, &lt;Project: Dolina capital&gt;]&gt;
+</code></pre></div>
+<p>2-usul</p>
+
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; from django.db.models import Q
+&gt;&gt;&gt; Project.objects.filter(Q(title__icontains=&#39;.uz&#39;) and Q(title__icontains=&#39;it&#39;))
+
+&lt;QuerySet [&lt;Project: IT Academy online ta&#39;lim&gt;, &lt;Project: Dolina capital&gt;]&gt;
+</code></pre></div>
+<ol>
+<li>Foydalanuvchi ro'yxatdan o'tgan oy aprel, may yoki dekabr bo'lgan foydalanuvchilarni chiqaring</li>
+</ol>
+<p>Avval hammasini ko'rib olamiz</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; for pr in Profile.objects.all(): print(pr, pr.created)
+
+Asror 2022-01-06
+Murod 2022-02-06
+Husniddin 2022-03-08
+Diyor 2022-04-08
+Akbar 2021-05-08
+Bekzod 2022-06-08
+Sherzod 2022-07-08
+Eshmat 2022-07-08
+Toshmat 2022-12-08
+Jasur 2022-12-08
+</code></pre></div>
+<p>Endi filtrlaymiz:</p>
+
+<p>1-usul</p>
+
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; for pr in Profile.objects.filter(created__month__in=[4,5,12]): print(pr, pr.created)
+
+Diyor 2022-04-08
+Akbar 2021-05-08
+Toshmat 2022-12-08
+Jasur 2022-12-08
+</code></pre></div>
+<p>2-usul</p>
+
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; for pr in Profile.objects.filter(Q(created__month=4) | Q(created__month=5) | Q(created__month=12)): print(pr, pr.created)
+
+Diyor 2022-04-08
+Akbar 2021-05-08
+Toshmat 2022-12-08
+Jasur 2022-12-08
+</code></pre></div>
+<h4 id="212-mantiqiy-and">2.1.2 Mantiqiy AND<a class="headerlink" href="#212-mantiqiy-and" title="Permanent link">&para;</a></h4>
+<ol>
+<li>github v instagram bor bo'lgan dasturchilari chiqaring</li>
+</ol>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; for pr in Profile.objects.filter(Q(social_github__isnull=False) &amp; Q(social_instagram__isnull=False)): print( pr.social_instagram,pr.social_github, pr.user.username)
+
+https://www.instagram.com/husnidd1n_17/ https://17husniddin.github.io/Potfolio/index.html Husniddin
+</code></pre></div>
+<ol>
+<li>2022 yil yanvardan aprelgacha ro'yxatdan o'tganlarni chiqaring</li>
+</ol>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; for pr in Profile.objects.filter(Q(created__year=2022) &amp; Q(created__month__range=[1,4])): print(pr.user.username,pr.created)
+
+Asror 2022-01-06
+Murod 2022-02-06
+Husniddin 2022-03-08
+Diyor 2022-04-08
+</code></pre></div>
+<h3 id="22-agregat-funksiyalar">2.2 Agregat funksiyalar<a class="headerlink" href="#22-agregat-funksiyalar" title="Permanent link">&para;</a></h3>
+<p>Agregat funksiyalar avval ma'lum guruhga tegishli ma'lumotni yig'ib oladi, so'ng uni qayta ishlaydi
+<br><a href="https://docs.djangoproject.com/en/4.0/topics/db/aggregation/">To'liqlor ma'lumot</a></p>
+<h4 id="221-count">2.2.1 Count<a class="headerlink" href="#221-count" title="Permanent link">&para;</a></h4>
+<p>Ikki hil usulda ishlatish mumkin:</p>
+<ul>
+<li>hamma qatorlar soni</li>
+<li>ma'lum guruhga tegishli qiymatlar soni</li>
+</ul>
+<p>Avg o'rtacha qiymatni topish uchun ishlatiladi</p>
+<ol>
+<li>Hamma loyihalar sonini chiqaring</li>
+</ol>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; Profile.objects.count()
+
+10
+</code></pre></div>
+<ol>
+<li>Nomida it so'zi uchragan loyihalar sonini chiqaring</li>
+</ol>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; Project.objects.filter(title__icontains=&#39;it&#39;).count()
+
+2
+</code></pre></div>
+<ol>
+<li>Asror bildirgan fikrlar sonini aniqlang</li>
+</ol>
+<p><br>
+Avval filtrlab olamiz</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; Review.objects.filter(user__user__username=&#39;Asror&#39;)
+
+&lt;QuerySet [&lt;Review: Zo&#39;r loyiha bo&#39;libdi&gt;, &lt;Review: CSS, HTML da qilinganmi&gt;]&gt;
+</code></pre></div>
+<p>Endi sonini chiqaramiz</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; Review.objects.filter(user__user__username=&#39;Asror&#39;).count()
+
+2
+</code></pre></div>
+<h5 id="endi-malum-guruhga-tegishli-qiymatlar-sonini-aniqlashni-koramiz">Endi ma'lum guruhga tegishli qiymatlar sonini aniqlashni ko'ramiz<a class="headerlink" href="#endi-malum-guruhga-tegishli-qiymatlar-sonini-aniqlashni-koramiz" title="Permanent link">&para;</a></h5>
+<ol>
+<li>Har bir foydalanuvchi nechtadan loyihasi borligini chiqaring</li>
+</ol>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; from django.db.models import Count
+&gt;&gt;&gt; for pr in Profile.objects.annotate(total_projects=Count(&#39;project&#39;)):
+...     print(pr, pr.total_projects)
+
+Asror 1
+Murod 1
+Husniddin 1
+Diyor 3
+Jasur 0
+Akbar 0
+Bekzod 0
+Sherzod 0
+Eshmat 0
+Toshmat 0
+</code></pre></div>
+<h4 id="222-avg">2.2.2 Avg<a class="headerlink" href="#222-avg" title="Permanent link">&para;</a></h4>
+<p>Avg - o'rtacha qiymatni topib, dict qaytaradi</p>
+<ol>
+<li>Loyihaga berilgan o'rtacha ovozlar sonini aniqlang</li>
+</ol>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; from django.db.models import Avg
+&gt;&gt;&gt; Project.objects.aggregate(Avg(&#39;vote_count&#39;))
+
+{&#39;vote_count__avg&#39;: 138.33333333333334}
+</code></pre></div>
+<p>yoki dict dagi kalitni o'zimiz bersak ham bo'ladi</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; from django.db.models import Avg
+&gt;&gt;&gt; Project.objects.aggregate(avarage=Avg(&#39;vote_count&#39;))
+
+{&#39;avarage&#39;: 138.33333333333334}
+</code></pre></div>
+<h4 id="223-min">2.2.3 Min<a class="headerlink" href="#223-min" title="Permanent link">&para;</a></h4>
+<p>Min - eng kichigini(son, sana) topib, dict qaytaradi.</p>
+<ol>
+<li>Loyihaga berilgan eng kichik ovozni chiqaring</li>
+</ol>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; from django.db.models import Min
+&gt;&gt;&gt; Project.objects.aggregate(min=Min(&#39;vote_count&#39;))
+
+{&#39;min&#39;: 30}
+</code></pre></div>
+<h4 id="224-max">2.2.4 Max<a class="headerlink" href="#224-max" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Loyihaga berilgan eng katta ovozni chiqaring</li>
+</ol>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; from django.db.models import Max
+&gt;&gt;&gt; Project.objects.aggregate(max=Max(&#39;vote_count&#39;))
+
+{&#39;max&#39;: 300}
+</code></pre></div>
+<h4 id="225-sum">2.2.5 Sum<a class="headerlink" href="#225-sum" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Loyihaga berilgan ovozlar yig'indisini chiqaring</li>
+</ol>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; from django.db.models import Sum
+&gt;&gt;&gt; Project.objects.aggregate(sum=Sum(&#39;vote_count&#39;))
+
+{&#39;sum&#39;: 830}
+</code></pre></div>
+<ol>
+<li>Loyihaga berilgan ovozlar sonini min, max, o'rtacha va yig'indisini chiqaring</li>
+</ol>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; Project.objects.aggregate(sum=Sum(&#39;vote_count&#39;), avg=Avg(&#39;vote_count&#39;), max=Max(&#39;vote_count&#39;), min=Min(&#39;vote_count&#39;))
+
+{&#39;sum&#39;: 830, &#39;avg&#39;: 138.33333333333334, &#39;max&#39;: 300, &#39;min&#39;: 30}
+</code></pre></div>
+<h5 id="birga-kop-boglanishda-agregat-funskiyalar">Birga ko'p bog'lanishda agregat funskiyalar<a class="headerlink" href="#birga-kop-boglanishda-agregat-funskiyalar" title="Permanent link">&para;</a></h5>
+<p><img alt="Sxema" src="../images/queryset/img_6.png" /></p>
+<ol>
+<li>Hamma foydalanuvchining hamma malakasi sonini chiqaring</li>
+</ol>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; Profile.objects.aggregate(Count(&#39;user_skills&#39;))
+
+{&#39;user_skills__count&#39;: 11}
+</code></pre></div>
+<ol>
+<li>Har bir foydalanuvchining nechtadan malakasi bor?</li>
+</ol>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; for pr in Profile.objects.annotate(soni = Count(&#39;user_skills&#39;)):
+...    print(pr, pr.soni)
+
+Asror 3
+Murod 2
+Husniddin 3
+Diyor 3
+Jasur 0
+Akbar 0
+Bekzod 0
+Sherzod 0
+Eshmat 0
+Toshmat 0
+</code></pre></div>
+<ol>
+<li>Har bir tegda nechtadan loyiha qilingan</li>
+</ol>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; for tag in Tag.objects.annotate(soni = Count(&#39;project_tag&#39;)):
+...   print(tag, tag.soni)
+
+Python 2
+React 3
+Django 1
+Django Rest Framework 1
+Javascript 5
+CSS,HTML 3
+test 0
+</code></pre></div>
+<p>Xulosa, masalan, Pythonda ikkita loyiha qilingan ekan</p>
+<ol>
+<li>Har bir tegda nechtadan loyiha qilinganligini tartiblab chiqaring</li>
+</ol>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; for tag in Tag.objects.annotate(soni = Count(&#39;project_tag&#39;)):
+...   print(tag, tag.soni)
+
+Python 2
+React 3
+Django 1
+Django Rest Framework 1
+Javascript 5
+CSS,HTML 3
+test 0
+</code></pre></div>
+<h2 id="3-amaliyot-oquvchi">3. Amaliyot. O'quvchi<a class="headerlink" href="#3-amaliyot-oquvchi" title="Permanent link">&para;</a></h2>
+<ol>
+<li>10 ta yoki 20 ovoz olgan loyihalarni chiqaring</li>
+<li>Yuzgacha yoki 1000dan ortiq ovoz olgan loyihalarni chiqaring</li>
+<li>2022 yil sentyabrdan dekabrgacha ro'yxatdan o'tgan foydalanuvchilar ro'yxati</li>
+<li>2021 yil yanvardan aprelgacha va 2022 yil sentyabrdan dekabrgacha ro'yxatdan o'tgan foydalanuvchilar ro'yxati</li>
+<li>Hamma foydalanuvchilar sonini chiqaring</li>
+<li>Hamma habarlar sonini chiqaring</li>
+<li>Hamma fikrlar sonini chiqaring</li>
+<li>Asrorga yuborilgan habarlar soni</li>
+<li>Asror yuborgan habarlar soni</li>
+<li>100 dan ortiq ovoz olgan loyihalar soni</li>
+<li>Har bir foydalanuvchi nechtadan habar jo'natgan</li>
+<li>Har bir foydalanuvchi nechtadan habar qabul qilgan</li>
+<li>Review modelidagi o'rtacha value ni toping</li>
+<li>Loyihaga berilgan eng kichik ovozni chiqaring</li>
+<li>Loyihaga berilgan eng katta ovozni chiqaring</li>
+<li>Har bir loyihada nechta teg (soha, dasturlash tili) bor?</li>
+<li>Har bir loyihaga nechtadan fikr bildirilgan</li>
+<li>Har bir foydalanuvchiga nechtadan habar jo'natilgan</li>
+</ol>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2023 PayTechUz
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://t.me/+7Gn-JZ99TfgwZDNi" target="_blank" rel="noopener" title="Telegram" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M248 8C111.033 8 0 119.033 0 256s111.033 248 248 248 248-111.033 248-248S384.967 8 248 8Zm114.952 168.66c-3.732 39.215-19.881 134.378-28.1 178.3-3.476 18.584-10.322 24.816-16.948 25.425-14.4 1.326-25.338-9.517-39.287-18.661-21.827-14.308-34.158-23.215-55.346-37.177-24.485-16.135-8.612-25 5.342-39.5 3.652-3.793 67.107-61.51 68.335-66.746.153-.655.3-3.1-1.154-4.384s-3.59-.849-5.135-.5q-3.283.746-104.608 69.142-14.845 10.194-26.894 9.934c-8.855-.191-25.888-5.006-38.551-9.123-15.531-5.048-27.875-7.717-26.8-16.291q.84-6.7 18.45-13.7 108.446-47.248 144.628-62.3c68.872-28.647 83.183-33.623 92.511-33.789 2.052-.034 6.639.474 9.61 2.885a10.452 10.452 0 0 1 3.53 6.716 43.765 43.765 0 0 1 .417 9.769Z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://github.com/hoosnick/rest-api-framework-book" target="_blank" rel="noopener" title="GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand"], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Buferga nusxalandi", "clipboard.copy": "Buferga nusxalash", "search.result.more.one": "Ushbu sahifada yana 1 ta natija", "search.result.more.other": "Bu sahifada yana # ta natija", "search.result.none": "Mos natijalar yo\u0027q", "search.result.one": "1 ta mos natija", "search.result.other": "# ta mos keladigan natijalar", "search.result.placeholder": "Qidiruvni boshlash uchun kiriting", "search.result.term.missing": "To\u0027ldirilmagan", "select.version": "Versiyani tanlang"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.aecac24b.min.js"></script>
+      
+    
+  </body>
+</html>

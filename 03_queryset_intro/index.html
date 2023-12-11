@@ -1,0 +1,1941 @@
+
+<!doctype html>
+<html lang="uz" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="🟢 Guides, Examples, Tutorials">
+      
+      
+        <meta name="author" content="Hoosnick">
+      
+      
+        <link rel="canonical" href="https://hoosnick.github.io/rest-api-framework-book/03_queryset_intro/">
+      
+      
+        <link rel="prev" href="../02_work_with_models/">
+      
+      
+        <link rel="next" href="../04_queryset_methods/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.5">
+    
+    
+      
+        <title>Mavzu 3: QuerySet. Filtr va shartlar bilan ishlash - REST API FRAMEWORK</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6a10b989.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.356b1318.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Ubuntu";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mavzu-3-queryset-filtr-va-shartlar-bilan-ishlash" class="md-skip">
+          Tarkibga o'tish
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Sarlavha">
+    <a href=".." title="REST API FRAMEWORK" class="md-header__button md-logo" aria-label="REST API FRAMEWORK" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 7H5a2 2 0 0 0-2 2v8h2v-4h2v4h2V9a2 2 0 0 0-2-2m0 4H5V9h2m7-2h-4v10h2v-4h2a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2m0 4h-2V9h2m6 0v6h1v2h-4v-2h1V9h-1V7h4v2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            REST API FRAMEWORK
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Mavzu 3: QuerySet. Filtr va shartlar bilan ishlash
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Qidirish" placeholder="Qidirish" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Qidirish">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Tozalash" aria-label="Tozalash" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Qidiruv ishga tushirilmoqda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/hoosnick/rest-api-framework-book" title="Repozitoriyga o'tish" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hoosnick/rest-api-framework-book
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigatsiya" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="REST API FRAMEWORK" class="md-nav__button md-logo" aria-label="REST API FRAMEWORK" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 7H5a2 2 0 0 0-2 2v8h2v-4h2v4h2V9a2 2 0 0 0-2-2m0 4H5V9h2m7-2h-4v10h2v-4h2a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2m0 4h-2V9h2m6 0v6h1v2h-4v-2h1V9h-1V7h4v2Z"/></svg>
+
+    </a>
+    REST API FRAMEWORK
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/hoosnick/rest-api-framework-book" title="Repozitoriyga o'tish" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hoosnick/rest-api-framework-book
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Django REST API Framework
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02_work_with_models/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 2: Modellar bilan ishlash
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Mavzu 3: QuerySet. Filtr va shartlar bilan ishlash
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 3: QuerySet. Filtr va shartlar bilan ishlash
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mundarija">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mundarija
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#reja" class="md-nav__link">
+    Reja:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-bilim" class="md-nav__link">
+    1. Bilim
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Bilim">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-terminlar" class="md-nav__link">
+    1.1 Terminlar
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-oqish-uchun-materiallar" class="md-nav__link">
+    1.2 O'qish uchun materiallar
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-amaliyot-oqituvchi" class="md-nav__link">
+    2. Amaliyot. O'qituvchi
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Amaliyot. O'qituvchi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#str" class="md-nav__link">
+    str
+  </a>
+  
+    <nav class="md-nav" aria-label="str">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#profile" class="md-nav__link">
+    Profile
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project" class="md-nav__link">
+    Project
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#message" class="md-nav__link">
+    Message
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skill" class="md-nav__link">
+    Skill
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#review" class="md-nav__link">
+    Review
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tag" class="md-nav__link">
+    Tag
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#211-insert-kiritish" class="md-nav__link">
+    2.1.1 INSERT - kiritish
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1.1 INSERT - kiritish">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#user" class="md-nav__link">
+    User
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profile_1" class="md-nav__link">
+    Profile
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#message_1" class="md-nav__link">
+    Message
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skill_1" class="md-nav__link">
+    Skill
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project_1" class="md-nav__link">
+    Project
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#review_1" class="md-nav__link">
+    Review
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tag_1" class="md-nav__link">
+    Tag
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#212-select-olish" class="md-nav__link">
+    2.1.2 SELECT - olish
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1.2 SELECT - olish">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-all" class="md-nav__link">
+    2.1 all
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-get" class="md-nav__link">
+    2.2 get
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-filter" class="md-nav__link">
+    2.3 filter
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 filter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#231-exact" class="md-nav__link">
+    2.3.1 exact
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#232-iexact" class="md-nav__link">
+    2.3.2 iexact
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#233-contains" class="md-nav__link">
+    2.3.3 contains
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#234-icontains" class="md-nav__link">
+    2.3.4 icontains
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#235-in" class="md-nav__link">
+    2.3.5 in
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#236-gt" class="md-nav__link">
+    2.3.6 gt
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#236-gte" class="md-nav__link">
+    2.3.6 gte
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#236-lt" class="md-nav__link">
+    2.3.6 lt
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#236-lte" class="md-nav__link">
+    2.3.6 lte
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2310-startswith" class="md-nav__link">
+    2.3.10 startswith
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2311-istartswith" class="md-nav__link">
+    2.3.11 istartswith
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2312-endswith" class="md-nav__link">
+    2.3.12 endswith
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2313-iendswith" class="md-nav__link">
+    2.3.13 iendswith
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2314-range" class="md-nav__link">
+    2.3.14 range
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2315-date" class="md-nav__link">
+    2.3.15 date
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2316-year" class="md-nav__link">
+    2.3.16 year
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2317-iso_year" class="md-nav__link">
+    2.3.17 iso_year
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2318-month" class="md-nav__link">
+    2.3.18 month
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2319-day" class="md-nav__link">
+    2.3.19 day
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2320-week" class="md-nav__link">
+    2.3.20 week
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2321-week_day" class="md-nav__link">
+    2.3.21 week_day
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2322-iso_week_day" class="md-nav__link">
+    2.3.22 iso_week_day
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2323-quarter" class="md-nav__link">
+    2.3.23 quarter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2324-time" class="md-nav__link">
+    2.3.24 time
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2325-hour" class="md-nav__link">
+    2.3.25 hour
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2326-second" class="md-nav__link">
+    2.3.26 second
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04_queryset_methods/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 4: QuerySet qaytaradigan metodlar
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05_queryset_functions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 5: QuerySet. Mantiqiy shartlar va agregat funksiyalar
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06_queryset_outro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 6: QuerySet. QuerySet qaytarmaydigan metodlar
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07_api_intro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 1: API va REST API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08_api_outro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 7: API va REST API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 8: Class View
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10_serializer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 9: Serializer. Pagination. Filtering. Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11_deploy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 10: Deploy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12_auth/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mavzu 11: Autentifikatsiya va avtorizatsiya
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mundarija">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mundarija
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#reja" class="md-nav__link">
+    Reja:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-bilim" class="md-nav__link">
+    1. Bilim
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Bilim">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-terminlar" class="md-nav__link">
+    1.1 Terminlar
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-oqish-uchun-materiallar" class="md-nav__link">
+    1.2 O'qish uchun materiallar
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-amaliyot-oqituvchi" class="md-nav__link">
+    2. Amaliyot. O'qituvchi
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Amaliyot. O'qituvchi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#str" class="md-nav__link">
+    str
+  </a>
+  
+    <nav class="md-nav" aria-label="str">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#profile" class="md-nav__link">
+    Profile
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project" class="md-nav__link">
+    Project
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#message" class="md-nav__link">
+    Message
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skill" class="md-nav__link">
+    Skill
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#review" class="md-nav__link">
+    Review
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tag" class="md-nav__link">
+    Tag
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#211-insert-kiritish" class="md-nav__link">
+    2.1.1 INSERT - kiritish
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1.1 INSERT - kiritish">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#user" class="md-nav__link">
+    User
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profile_1" class="md-nav__link">
+    Profile
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#message_1" class="md-nav__link">
+    Message
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skill_1" class="md-nav__link">
+    Skill
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project_1" class="md-nav__link">
+    Project
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#review_1" class="md-nav__link">
+    Review
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tag_1" class="md-nav__link">
+    Tag
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#212-select-olish" class="md-nav__link">
+    2.1.2 SELECT - olish
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1.2 SELECT - olish">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-all" class="md-nav__link">
+    2.1 all
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-get" class="md-nav__link">
+    2.2 get
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-filter" class="md-nav__link">
+    2.3 filter
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 filter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#231-exact" class="md-nav__link">
+    2.3.1 exact
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#232-iexact" class="md-nav__link">
+    2.3.2 iexact
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#233-contains" class="md-nav__link">
+    2.3.3 contains
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#234-icontains" class="md-nav__link">
+    2.3.4 icontains
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#235-in" class="md-nav__link">
+    2.3.5 in
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#236-gt" class="md-nav__link">
+    2.3.6 gt
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#236-gte" class="md-nav__link">
+    2.3.6 gte
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#236-lt" class="md-nav__link">
+    2.3.6 lt
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#236-lte" class="md-nav__link">
+    2.3.6 lte
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2310-startswith" class="md-nav__link">
+    2.3.10 startswith
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2311-istartswith" class="md-nav__link">
+    2.3.11 istartswith
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2312-endswith" class="md-nav__link">
+    2.3.12 endswith
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2313-iendswith" class="md-nav__link">
+    2.3.13 iendswith
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2314-range" class="md-nav__link">
+    2.3.14 range
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2315-date" class="md-nav__link">
+    2.3.15 date
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2316-year" class="md-nav__link">
+    2.3.16 year
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2317-iso_year" class="md-nav__link">
+    2.3.17 iso_year
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2318-month" class="md-nav__link">
+    2.3.18 month
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2319-day" class="md-nav__link">
+    2.3.19 day
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2320-week" class="md-nav__link">
+    2.3.20 week
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2321-week_day" class="md-nav__link">
+    2.3.21 week_day
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2322-iso_week_day" class="md-nav__link">
+    2.3.22 iso_week_day
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2323-quarter" class="md-nav__link">
+    2.3.23 quarter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2324-time" class="md-nav__link">
+    2.3.24 time
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2325-hour" class="md-nav__link">
+    2.3.25 hour
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2326-second" class="md-nav__link">
+    2.3.26 second
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="mavzu-3-queryset-filtr-va-shartlar-bilan-ishlash">Mavzu 3: QuerySet. Filtr va shartlar bilan ishlash<a class="headerlink" href="#mavzu-3-queryset-filtr-va-shartlar-bilan-ishlash" title="Permanent link">&para;</a></h1>
+<h2 id="reja">Reja:<a class="headerlink" href="#reja" title="Permanent link">&para;</a></h2>
+<ol>
+<li><a href="#1-bilim">Bilim</a></li>
+<li><a href="#11-terminlar">1.1 Terminlar</a></li>
+<li><a href="#12-oqish-uchun-materiallar">1.2 O'qish uchun materiallar</a></li>
+<li><a href="#2-amaliyot-oqituvchi">Amaliyot. O'qituvchi</a></li>
+<li><a href="#3-amaliyot-oquvchi">Amaliyot. O'quvchi</a></li>
+</ol>
+<h2 id="1-bilim">1. Bilim<a class="headerlink" href="#1-bilim" title="Permanent link">&para;</a></h2>
+<h3 id="11-terminlar">1.1 Terminlar<a class="headerlink" href="#11-terminlar" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>tuple - o&#39;zgarmas ro&#39;yxat. s&#39;ni boshida bir marta qiymat beriladi, keyin o&#39;zgartirib bo&#39;lmaydi
+element - ro&#39;yxat tarkibidagi har bir qiymat
+indeks - elementlarning ro&#39;yxatdagi pozitsiyasi
+</code></pre></div>
+<h3 id="12-oqish-uchun-materiallar">1.2 O'qish uchun materiallar<a class="headerlink" href="#12-oqish-uchun-materiallar" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://www.w3schools.com/python/python_tuples.asp">w3schools - py tuples</a></li>
+<li><a href="https://python.sariq.dev/ozgaruvchilar-va-malumot-turlari/08-list-tuple">sariq dev - Ro'yxat bilan ishlash</a></li>
+</ul>
+<h2 id="2-amaliyot-oqituvchi">2. Amaliyot. O'qituvchi<a class="headerlink" href="#2-amaliyot-oqituvchi" title="Permanent link">&para;</a></h2>
+<p><strong>Reja:</strong></p>
+<ul>
+<li>[2.1 INSERT - kiritish]</li>
+<li>[2.2 SELECT - olish]</li>
+<li>[2.2.1 all]</li>
+<li>[2.2.2 get]</li>
+<li>[2.2.3 filter]</li>
+<li>2.2.4 exclude</li>
+<li>2.3 Shartlar</li>
+<li>[2.3.1 exact]</li>
+<li>[2.3.2 iexact]</li>
+<li>[2.3.3 contains]</li>
+<li>[2.3.4 icontains]</li>
+<li>[2.3.5 in]</li>
+<li>[2.3.6 gt]</li>
+<li>[2.3.7 gte]</li>
+<li>[2.3.8 lt]</li>
+<li>[2.3.9 lte]</li>
+<li>[2.3.10 startswith]</li>
+<li>[2.3.11 istartswith]</li>
+<li>[2.3.12 endswith]</li>
+<li>[2.3.13 iendswith]</li>
+<li>[2.3.14 range]</li>
+<li>[2.3.15 date]</li>
+<li>[2.3.16 year]</li>
+<li>[2.3.17 iso_year]</li>
+<li>[2.3.18 month]</li>
+<li>[2.3.19 day]</li>
+<li>[2.3.20 week]</li>
+<li>[2.3.21 week_day]</li>
+<li>[2.3.22 iso_week_day]</li>
+<li>[2.3.23 quarter]</li>
+<li>[2.3.24 time]</li>
+<li>[2.3.25 hour]</li>
+<li>[2.3.26 second]</li>
+<li>[2.3.27 isnull]</li>
+<li>[2.3.27 regex]</li>
+<li>[2.3.28 iregex]</li>
+<li>[2.4 UPDATE - o'zgartirish]</li>
+<li>[2.5 DELETE - o'chirish]</li>
+</ul>
+<h4 id="str"><strong>str</strong><a class="headerlink" href="#str" title="Permanent link">&para;</a></h4>
+<h5 id="profile">Profile<a class="headerlink" href="#profile" title="Permanent link">&para;</a></h5>
+<div class="highlight"><pre><span></span><code>class Profile(models.Model):
+    ...
+    def __str__(self):
+      return f&quot;{self.user.last_name} {self.user.first_name}&quot;
+</code></pre></div>
+<h5 id="project">Project<a class="headerlink" href="#project" title="Permanent link">&para;</a></h5>
+<div class="highlight"><pre><span></span><code>class Project(models.Model):
+    ...
+    def __str__(self):
+        return f&quot;{self.title}&quot;
+</code></pre></div>
+<h5 id="message">Message<a class="headerlink" href="#message" title="Permanent link">&para;</a></h5>
+<div class="highlight"><pre><span></span><code>class Message(models.Model):
+    def __str__(self):
+        return f&quot;{self.subject}&quot;
+</code></pre></div>
+<h5 id="skill">Skill<a class="headerlink" href="#skill" title="Permanent link">&para;</a></h5>
+<div class="highlight"><pre><span></span><code>class Skill(models.Model):
+    ...
+    def __str__(self):
+        return f&quot;{self.name}&quot;
+</code></pre></div>
+<h5 id="review">Review<a class="headerlink" href="#review" title="Permanent link">&para;</a></h5>
+<div class="highlight"><pre><span></span><code>class Review(models.Model):
+    ...
+    def __str__(self):
+        return f&quot;{self.body}&quot;
+</code></pre></div>
+<h5 id="tag">Tag<a class="headerlink" href="#tag" title="Permanent link">&para;</a></h5>
+<div class="highlight"><pre><span></span><code>class Tag(models.Model):
+    ...
+    def __str__(self):
+        return f&quot;{self.name}&quot;
+</code></pre></div>
+<h4 id="211-insert-kiritish">2.1.1 INSERT - kiritish<a class="headerlink" href="#211-insert-kiritish" title="Permanent link">&para;</a></h4>
+<p>Ma'lumot kiritishning bir necha usulini ko'ramiz:</p>
+<ul>
+<li>Admin panel yordamida</li>
+<li>DB Browser yordamida</li>
+<li>Django konsolda yoki Django loyihasida</li>
+</ul>
+<p>Admin paneldan va DB browserda qanday qilib ma'lumot kiritish bo'yicha vazifalarni bajarasiz
+<br>
+So'ng python (Django konsolda yoki Django loyihasida) orqali qaday amalga oshirilishini ko'ramiz
+<br></p>
+<p><strong>Vazifa</strong></p>
+<ol>
+<li>Admin panel yordamida profile jadvalidagi tegga python va javascript teglarini qo'shing.</li>
+<li>Admin panel yordamida profile jadvalidagi teglarni, ya'ni pyton va javascripti Django va React ga o'zgartiring</li>
+<li>Admin panel yordamida Django va React teglarini o'chiring</li>
+<li>DB Browserdan siz qo'shgan yozuvni ochib ko'rsating</li>
+<li>Yuqoridagi ishlarni DB Browser Sqlite yordamida bajaring (Uyga)</li>
+</ol>
+<p>Avval Django admin paneldan ma'lumotlar tushunarli holda ko'rishi uchun <strong>str</strong> metodlarni yozib chiqamiz</p>
+<h5 id="user">User<a class="headerlink" href="#user" title="Permanent link">&para;</a></h5>
+<p>Avval Django konsolini ochib olamiz:</p>
+<div class="highlight"><pre><span></span><code>python manage.py shell
+</code></pre></div>
+<ol>
+<li>User modeliga ma'lumot qo'shamiz</li>
+</ol>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; from django.contrib.auth.models import User
+&gt;&gt;&gt; asror = User.objects.create(username=&quot;Asror&quot;, first_name=&quot;Asror&quot;, last_name=&quot;Abduvosiqov&quot;,password=&quot;12!@qwQW&quot;)
+&gt;&gt;&gt; murod = User.objects.create(username=&quot;Murod&quot;, first_name=&quot;Murod&quot;, last_name=&quot;Kusherbayev&quot;,password=&quot;12!@qwQW&quot;)
+&gt;&gt;&gt; husniddin = User.objects.create(username=&quot;Husniddin&quot;, first_name=&quot;Husniddin&quot;, last_name=&quot;Muminov&quot;,password=&quot;12!@qwQW&quot;)
+&gt;&gt;&gt; User.objects.create(username=&quot;Diyor&quot;, first_name=&quot;Diyor&quot;, last_name=&quot;Malikov&quot;,password=&quot;12!@qwQW&quot;)
+&lt;User: Diyor&gt;
+&gt;&gt;&gt; User.objects.create(username=&quot;Jasur&quot;, first_name=&quot;Jasur&quot;,password=&quot;12!@qwQW&quot;)
+&lt;User: Jasur&gt;
+&gt;&gt;&gt; User.objects.create(first_name=&quot;Otabek&quot;)
+&gt;&gt;&gt; User.objects.create(first_name=&quot;Otabek&quot;)
+django.db.utils.IntegrityError: UNIQUE constraint failed: auth_user.username
+</code></pre></div>
+<p>Ohirgi holatda xatolik beradi, chunki username ikkita foydaluvchida bir hil bo'lib qoladi, username UNIQUE (qaytarilmas) bo'lishi kerak</p>
+<h5 id="profile_1">Profile<a class="headerlink" href="#profile_1" title="Permanent link">&para;</a></h5>
+<ol>
+<li>Profile modeliga ma'lumot kiritamiz</li>
+</ol>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; from users.models import Profile
+&gt;&gt;&gt; asror_profile = Profile.objects.create(user=asror, bio=&quot;lorem ipsum&quot;, location=&quot;Toshkent sh. Yunusobod t.&quot;, profile_image=&quot;portfolio/Asror.png&quot;, social_github=&quot;https://github.com/&quot;, social_website=&quot;https://www.gazeta.uz/uz/&quot;)
+&gt;&gt;&gt; murod_profile = Profile.objects.create(user=murod, bio=&quot;lorem ipsum&quot;, location=&quot;Toshkent sh. Sergeli t.&quot;, profile_image=&quot;portfolio/Murod.png&quot;)
+&gt;&gt;&gt; diyor = User.objects.get(username=&#39;Diyor&#39;)
+&gt;&gt;&gt; Profile.objects.create(user=diyor, bio=&quot;lorem ipsum&quot;, location=&quot;Toshkent sh. Mirzo Ulu&#39;bek&quot;, profile_image=&quot;portfolio/Diyor.png&quot;)
+&gt;&gt;&gt; husniddin = User.objects.get(username=&#39;Husniddin&#39;)
+&gt;&gt;&gt; husniddin = User.objects.get(username=&#39;Husniddin&#39;)
+django.db.utils.IntegrityError: UNIQUE constraint failed: users_profile.user_id
+&gt;&gt;&gt; Profile.objects.create(user=husniddin, bio=&quot;lorem ipsum&quot;, location=&quot;Toshkent v. Zagiota tumani&quot;, profile_image=&quot;portfolio/default_profile.webp&quot;, social_github=&quot;https://17husniddin.github.io/Potfolio/index.html&quot;, social_instagram=&quot;https://www.instagram.com/husnidd1n_17/&quot;)
+&gt;&gt;&gt; Profile.objects.create(bio=&quot;lorem ipsum&quot;, location=&quot;Toshkent v. Zagiota tumani&quot;)
+AttributeError: &#39;NoneType&#39; object has no attribute &#39;last_name&#39;
+</code></pre></div>
+<p>Ohirgi holatda xatolik beradi, sababi <strong>str</strong> metodida user.last_name ko'rsatilgan , bu holatda esa user=None, shuning uchun userni ko'rsatish kerak</p>
+<p><strong>Vazifa</strong><br>
+Quyidagi Akbar, Sherzod, Bekzod, Eshmat, Toshmat, Jasur nomli foydalnuvchilar kiriting. Avval user ga so'ng, profile ga. Userga faqat username ni yozamiz. Profilega esa user va bioni yozamiz. Rasm o'rnida default qiymatni olsin
+<br></p>
+<p>Mijozlar:</p>
+<ul>
+<li>Akbar</li>
+<li>Eshmat</li>
+<li>Toshmat</li>
+<li>Jasur</li>
+<li>Bekzod</li>
+<li>Sherzod</li>
+</ul>
+<p>Bitiruvchi o'quvchilar:</p>
+<ul>
+<li>Asror</li>
+<li>Murod</li>
+<li>Husniddin</li>
+<li>Diyor</li>
+</ul>
+<h5 id="message_1">Message<a class="headerlink" href="#message_1" title="Permanent link">&para;</a></h5>
+<p>Endi mijozlar o'quvchilarga habar qoldirishini ko'ramiz:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; jasur_f = Profile.objects.get(user__username=&#39;Jasur&#39;)
+&gt;&gt;&gt; bekzod_f = Profile.objects.get(user__username=&#39;Bekzod&#39;)
+&gt;&gt;&gt; sherzod_f = Profile.objects.get(user__username=&#39;Sherzod&#39;)
+&gt;&gt;&gt; eshmat_f = Profile.objects.get(user__username=&#39;Eshmat&#39;)
+&gt;&gt;&gt; toshmat_f = Profile.objects.get(user__username=&#39;Toshmat&#39;)
+&gt;&gt;&gt; akbar_f = Profile.objects.get(user__username=&#39;Akbar&#39;)
+&gt;&gt;&gt; Message.objects.create(subject=&#39;Ish masalasida&#39;, body=&quot;Siz bilan gaplashsak bo&#39;ladimi? Ishga taklif qilmoqchi edim&quot;, sender=akbar_f, receiver=asror_f)
+&gt;&gt;&gt; Message.objects.create(subject=&#39;Ish masalasida&#39;, body=&quot;Siz bilan qanday bog&#39;lansak bo&#39;ladi&quot;, sender=eshmat_f, receiver=diyor_f)
+&gt;&gt;&gt; Message.objects.create(subject=&#39;Ish masalasida&#39;, body=&quot;Yangi ish qidiryapsizmi&quot;, sender=jasur_f, receiver=diyor_f)
+&gt;&gt;&gt; Message.objects.create(subject=&#39;Ish masalasida&#39;, body=&quot;Ingliz tili darajangiz qanday?&quot;, sender=bekzod, receiver=husniddin_f)
+&gt;&gt;&gt; Message.objects.create(subject=&#39;Ish masalasida&#39;, body=&quot;Ingliz tili darajangiz qanday?&quot;, sender=bekzod, receiver=murod_f)
+</code></pre></div>
+<p><strong>Vazifa</strong>
+<br>
+Akbar, Asror va Husniddin habar yuboruvchi bo'lsin, Toshmat, Diyor va Murod qabul qiluvchi bo'lsin, shunda message ga 3 ta qator yozuv yoziladi</p>
+<h5 id="skill_1">Skill<a class="headerlink" href="#skill_1" title="Permanent link">&para;</a></h5>
+<p><strong>Vazifa</strong></p>
+<p>Bitiruvchilarga quyidagi malakalarni kiriting.</p>
+<ul>
+<li>Asror - 1. Python, 2. Django 3. Django Rest framework</li>
+<li>Murod - 1. Javascript 2. React</li>
+<li>Husniddin - 1. CSS,HTML 2. Python. 3. Django</li>
+<li>Diyor - 1. Javascript 2. React 3. NextJs</li>
+</ul>
+<h5 id="project_1">Project<a class="headerlink" href="#project_1" title="Permanent link">&para;</a></h5>
+<p><strong>Vazifa</strong>
+<img alt="Ramslarni" src="../02.%20Modellar%20bilan%20ishlash/loyiha/students_portfolio/media/projects" /> loyihaga media/projects katalogiga ko'chiring.
+<br>
+So'ng bitiruvchilarga quyidagi loyihalarni va loyiha rasmi yo'li bilan nomini kiriting.</p>
+<ul>
+<li>Asror</li>
+<li>title="IT Academy online ta'lim"</li>
+<li>image="projects/project-1.png"</li>
+<li>vote_count=100</li>
+<li>vote_ratio=60</li>
+<li>description="lorem ipsum"</li>
+<li>
+<p>Murod</p>
+</li>
+<li>
+<p>title="Kannas-textile"</p>
+</li>
+<li>image="projects/project-5.png"</li>
+<li>vote_count=50</li>
+<li>vote_ratio=90</li>
+<li>
+<p>description="lorem ipsum"</p>
+</li>
+<li>
+<p>Husniddin</p>
+</li>
+<li>
+<p>title="Alimax pro"</p>
+</li>
+<li>image="projects/project-6.png"</li>
+<li>vote_count=300</li>
+<li>vote_ratio=90</li>
+<li>
+<p>description="lorem ipsum"</p>
+</li>
+<li>
+<p>Diyor</p>
+</li>
+<li>
+<p>title="ePark.uz"</p>
+</li>
+<li>image="projects/project-2.png"</li>
+<li>vote_count=150</li>
+<li>vote_ratio=20</li>
+<li>
+<p>description="lorem ipsum"</p>
+</li>
+<li>
+<p>title="ЧД - че думаеш?"</p>
+</li>
+<li>image="projects/project-3.png"</li>
+<li>vote_count=200</li>
+<li>vote_ratio=10</li>
+<li>
+<p>description="lorem ipsum"</p>
+</li>
+<li>
+<p>title="Dolina capital"</p>
+</li>
+<li>image="projects/project-4.png"</li>
+<li>vote_count=30</li>
+<li>vote_ratio=70</li>
+<li>description="lorem ipsum"</li>
+</ul>
+<h5 id="review_1">Review<a class="headerlink" href="#review_1" title="Permanent link">&para;</a></h5>
+<p><strong>Vazifa</strong>
+Quyidagi ma'lumotlarni Review jadvaliga kiriting:
+<img alt="" src="../images/queryset/img_9.png" /></p>
+<h5 id="tag_1">Tag<a class="headerlink" href="#tag_1" title="Permanent link">&para;</a></h5>
+<p>Endi ko'pga ko'p bog'lanishda ma'lumot kiritishni ko'rib o'tamiz
+Avval taglarni kiritib olamiz</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; from projects.models import Tag
+&gt;&gt;&gt; py=Tag.objects.create(name=&#39;Python&#39;)
+&gt;&gt;&gt; re=Tag.objects.create(name=&#39;React&#39;)
+&gt;&gt;&gt; dj=Tag.objects.create(name=&#39;Django&#39;)
+&gt;&gt;&gt; drf=Tag.objects.create(name=&#39;Django Rest Framework&#39;)
+&gt;&gt;&gt; js=Tag.objects.create(name=&#39;Javascript&#39;)
+&gt;&gt;&gt; css=Tag.objects.create(name=&#39;CSS,HTML&#39;)
+</code></pre></div>
+<p>Endi esa teglarni loyiha obyektining tag hususiyatiga qo'shamiz. Avval loyihani id orqali qo'lga kiritamiz</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; from projects.models import Project
+&gt;&gt;&gt; for p in Project.objects.all():
+...    print(f&quot;{p.id} {p.title} {p.user}&quot;)
+...
+1 IT Academy online ta&#39;lim Asror
+2 ePark.uz Diyor
+3 ЧД - че думаеш? Diyor
+4 Dolina capital Diyor
+5 Kannas-textile Murod
+6 Alimax pro Husniddin
+</code></pre></div>
+<p>Deylik "IT Academy online ta'lim" dasturi teglariga "Python" va "Django Rest Framework" ni yozmoqchimiz. Unda avval id=1 bo'lgan loyihani get() metodi bilan olishimiz kerak. Keyin teglarni add() metodi bilan qo'shamiz</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; pr1 = Project.objects.get(id=1)
+&gt;&gt;&gt; pr1.tag.add(py, drf)
+</code></pre></div>
+<p>id=1 loyiha qaysi teglarini ko'rmoqchi bo'lsak</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; pr1.tag.all()
+&lt;QuerySet [&lt;Tag: Python&gt;, &lt;Tag: Django Rest Framework&gt;]&gt;
+</code></pre></div>
+<p><strong>Vazifa</strong>
+Huddi shunday qolgan loyihalarga quyidagi teglarni kiritib, so'ng tekshiring</p>
+<ul>
+<li>2 ePark.uz: React, Javascript</li>
+<li>3 ЧД - че думаеш?: Python, Django, React, Javascript</li>
+<li>4 Dolina capital: Javascript, "CSS,HTML"</li>
+<li>5 Kannas-textile: React, Javascript, "CSS,HTML"</li>
+<li>6 Alimax pro: Javascript, "CSS,HTML"</li>
+</ul>
+<p>Endi bu bazani DB Browser dan ochib tahlil qiling. Tushunishga harakat qiling</p>
+<h4 id="212-select-olish">2.1.2 SELECT - olish<a class="headerlink" href="#212-select-olish" title="Permanent link">&para;</a></h4>
+<h5 id="21-all">2.1 all<a class="headerlink" href="#21-all" title="Permanent link">&para;</a></h5>
+<p>all() metodi hamma obyektni olish uchun ishlatiladi.
+<br>
+Masalan hamma teglarni ekranga chiqarish uchun all() metodidan foydalanamiz</p>
+<div class="highlight"><pre><span></span><code>from projects.models import Tag
+for tag in Tag.objects.all():
+  print(f&quot;{tag.id} {tag.name}&quot;)
+
+5 Python
+6 React
+7 Django
+8 Django Rest Framework
+9 Javascript
+10 CSS,HTML
+</code></pre></div>
+<p><strong>Vazifa</strong>
+Hamma loyiha, profil, malaka, izoh, habarlarni ekranga chiqaring</p>
+<h5 id="22-get">2.2 get<a class="headerlink" href="#22-get" title="Permanent link">&para;</a></h5>
+<p>Bitta obyektni qo'lga kiritish uchun get() metodi ishlatiladi. Parametrga shartini yozamiz. Shartlar murakkab bo'lishi mumkin, hozircha soddasini ko'rib turamiz</p>
+<p>id=1 bo'lgan loyihani chiqarish</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; from projects.models import Project
+&gt;&gt;&gt; Project.objects.get(id=1)
+&lt;Project: IT Academy online ta&#39;lim&gt;
+</code></pre></div>
+<p>id=1 bo'lgan loyiha nechta ovoz to'plagan</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; from projects.models import Project
+&gt;&gt;&gt; pr=Project.objects.get(id=1)
+&gt;&gt;&gt; pr.vote_count
+100
+</code></pre></div>
+<p>Demak id=1 bo'lgan loyiha 100 ovoz to'plagan ekan</p>
+<p>Nomi 'ePark.uz' bo'lgan loyiha qaysi dasturlash tillarida va freymworklarda ishlatilgan?</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; from projects.models import Project
+&gt;&gt;&gt; pr=Project.objects.get(title=&#39;ePark.uz&#39;)
+&gt;&gt;&gt; pr.tag.all()
+&lt;QuerySet [&lt;Tag: React&gt;, &lt;Tag: Javascript&gt;]&gt;
+</code></pre></div>
+<p><strong>Vazifa</strong></p>
+<ol>
+<li>Nomi 'ePark.uz' bo'lgan loyihani qaysi dasturchi qilgan</li>
+<li>id=2 bo'lgan loyiha qancha ovoz to'plagan</li>
+<li>'Alimax pro' nomli loyiha demo linkini chiqaring</li>
+</ol>
+<h5 id="23-filter">2.3 filter<a class="headerlink" href="#23-filter" title="Permanent link">&para;</a></h5>
+<p>Agar natija bir nechta bo'lsa, unda filter metodini qo'llaymiz.</p>
+<p>100 ta ovoz olgan loyihalar ro'yxatini chiqaring</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; for pr in Project.objects.filter(vote_count=100):
+...    print(pr.title)
+...
+IT Academy online ta&#39;lim
+</code></pre></div>
+<h6 id="231-exact">2.3.1 exact<a class="headerlink" href="#231-exact" title="Permanent link">&para;</a></h6>
+<p>exact sharti aynan berilgan qiymatga tengligini tekshiradi
+<br>
+Aynan Asrorni malakalarini chiqaring</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; Skill.objects.filter(user__exact=asror)
+&lt;QuerySet [&lt;Skill: Python&gt;, &lt;Skill: Django&gt;, &lt;Skill: Django Rest Framework&gt;]&gt;
+</code></pre></div>
+<p>Web sahifasi bo'lmagan dasturchilar ro'yxatini chiqaring:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; [pr.user.username for pr in Profile.objects.filter(social_website__exact=None)]
+[&#39;Murod&#39;, &#39;Husniddin&#39;, &#39;Diyor&#39;, &#39;Akbar&#39;, &#39;Bekzod&#39;, &#39;Sherzod&#39;, &#39;Eshmat&#39;, &#39;Toshmat&#39;, &#39;Jasur&#39;]
+</code></pre></div>
+<p><strong>Vazifa</strong></p>
+<ol>
+<li>Video yuklamagan foydalanuvchilar ro'yxati</li>
+<li>Profil id=15 bo'lgan foydalanuvcilar ro'yxati</li>
+</ol>
+<h6 id="232-iexact">2.3.2 iexact<a class="headerlink" href="#232-iexact" title="Permanent link">&para;</a></h6>
+<p>Qiymatni solishtirganda harflar kichik yoki kattaligiga ahamiyat bermaydi
+<br>
+Nomi 'asror' bo'lgan foydalanuvchini chiqarish kerak</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; [pr.username for pr in User.objects.filter(first_name=&#39;asror&#39;)]
+[]
+&gt;&gt;&gt; [pr.username for pr in User.objects.filter(first_name__exact=&#39;asror&#39;)]
+[]
+&gt;&gt;&gt; [pr.username for pr in User.objects.filter(first_name__iexact=&#39;asror&#39;)]
+[&#39;Asror&#39;]
+</code></pre></div>
+<p><strong>Vazifa</strong></p>
+<ol>
+<li>Nomi 'alimax pro' bo'lgan loyihani get() metodi bilan chiqaring</li>
+</ol>
+<h6 id="233-contains">2.3.3 contains<a class="headerlink" href="#233-contains" title="Permanent link">&para;</a></h6>
+<p>contains tarkibida bor yo'qligini tekshiradi
+<br>
+Ismida z harfi bor bo'lgan dasturchilar ro'yxatini chiqaring
+Avval hammasini ko'rib olamiz:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; [user.username for user in User.objects.all()]
+[&#39;admin&#39;, &#39;Asror&#39;, &#39;Murod&#39;, &#39;Husniddin&#39;, &#39;Diyor&#39;, &#39;Jasur&#39;, &#39;&#39;, &#39;Akbar&#39;, &#39;Bekzod&#39;, &#39;Sherzod&#39;, &#39;Eshmat&#39;, &#39;Toshmat&#39;]
+</code></pre></div>
+<p>Endi shart bilan chiqaramiz</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; [user.username for user in User.objects.filter(username__contains=&#39;z&#39;)]
+[&#39;Bekzod&#39;, &#39;Sherzod&#39;]
+</code></pre></div>
+<p><strong>Vazifa</strong></p>
+<ol>
+<li>Nomida '.' belgisi bor loyihalar ro'yxatini chiqaring</li>
+<li>Nomida 'IT' yozuvi bor loyihalar ro'yxatini chiqaring</li>
+</ol>
+<h6 id="234-icontains">2.3.4 icontains<a class="headerlink" href="#234-icontains" title="Permanent link">&para;</a></h6>
+<p>icontains tarkibida bor yo'qligini tekshiradi, contain() metodidan farqi harf katta yoki kichikligini ahamiyati yo'q
+SQLite da contains va icontains bir hil ishlaydi</p>
+<h6 id="235-in">2.3.5 in<a class="headerlink" href="#235-in" title="Permanent link">&para;</a></h6>
+<p>in sharti berilgan ro'yxatdan kamida bittasi mavjud ekanligini tekshiradi
+<br>Python yoki Go ishlatilgan loyihalar ro'yxatini chiqaring</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; print(&quot;\n&quot;.join([pr.title for pr in Project.objects.filter(tag__name__in=[&#39;Python&#39;, &#39;Go&#39;])]))
+IT Academy online ta&#39;lim
+ЧД - че думаеш?
+</code></pre></div>
+<p>Asror bilan Husniddin qilgan loyihalarni chiqaring</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; print(&quot;\n&quot;.join([pr.title for pr in Project.objects.filter(user__in=[asror, husniddin])]))
+IT Academy online ta&#39;lim
+Alimax pro
+</code></pre></div>
+<p><strong>Vazifa</strong></p>
+<ol>
+<li>Ovozlar soni 100 yoki 200 yokii 300 ga teng bo'lgan loyiha nomlarini chiqaring</li>
+<li>Asror yoki Husniddin loyihalarga bergan fikrlarini, qaysi loyihaga fikr berganlari ro'yxatini chiqaring</li>
+</ol>
+<h6 id="236-gt">2.3.6 gt<a class="headerlink" href="#236-gt" title="Permanent link">&para;</a></h6>
+<h6 id="236-gte">2.3.6 gte<a class="headerlink" href="#236-gte" title="Permanent link">&para;</a></h6>
+<h6 id="236-lt">2.3.6 lt<a class="headerlink" href="#236-lt" title="Permanent link">&para;</a></h6>
+<h6 id="236-lte">2.3.6 lte<a class="headerlink" href="#236-lte" title="Permanent link">&para;</a></h6>
+<p>gt,gte,lt,lte solishtirish uchun ishlatiladi. Ma'nolari:</p>
+<ul>
+<li>gt - katta</li>
+<li>gte - katta yoki teng</li>
+<li>lt - kichik</li>
+<li>lte - kichik yoki teng</li>
+</ul>
+<p>Ovozlar soni 100 dan katta bo'lgan loyihalarni, uni qilgan dasturchini chiqaring</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; [(pr.id, pr.user, pr.title) for pr in Project.objects.filter(vote_count__gt=100)]
+[(2, &lt;Profile: Diyor&gt;, &#39;ePark.uz&#39;), (3, &lt;Profile: Diyor&gt;, &#39;ЧД - че думаеш?&#39;), (6, &lt;Profile: Husniddin&gt;, &#39;Alimax pro&#39;)]
+</code></pre></div>
+<p>Tizimga 06.07.2022 sanada kirgan yoki undan avval qo'shilgan dasturchilarni chiqaring</p>
+<div class="highlight"><pre><span></span><code>[(pr.created, pr.user) for pr in Profile.objects.filter(created__lte=date(day=6,month=7,year=2022))]
+[(datetime.date(2022, 7, 6), &lt;User: Asror&gt;), (datetime.date(2022, 7, 6), &lt;User: Murod&gt;)]
+</code></pre></div>
+<p><strong>Vazifa</strong></p>
+<ol>
+<li>Ovozlar nisbati 50 dan katta bo'lgan loyihalarni nomini va uni qilgan dasturchi ismini chiqaring</li>
+<li>01.01.2022 dan 08.08.202 oraliqda ro'yxatdan o'tgan dasturchilarni chiqaring
+   <br>Yoram uchun <a href="https://docs.djangoproject.com/en/4.0/ref/models/querysets/#operators-that-return-new-querysets">quyidagi</a> linkka kiring</li>
+</ol>
+<h6 id="2310-startswith">2.3.10 startswith<a class="headerlink" href="#2310-startswith" title="Permanent link">&para;</a></h6>
+<h6 id="2311-istartswith">2.3.11 istartswith<a class="headerlink" href="#2311-istartswith" title="Permanent link">&para;</a></h6>
+<h6 id="2312-endswith">2.3.12 endswith<a class="headerlink" href="#2312-endswith" title="Permanent link">&para;</a></h6>
+<h6 id="2313-iendswith">2.3.13 iendswith<a class="headerlink" href="#2313-iendswith" title="Permanent link">&para;</a></h6>
+<ul>
+<li>endswith - berilgan qiymat bilan tugashini tekshiradi</li>
+<li>iendswith - endswith bilan o'xashash, faqat harf katta kichikligini ahamiyati bo'lmaydi</li>
+<li>startswith - berilgan qiymat bilan boshlanishini tekshiradi</li>
+<li>istartswith - berilgan startswith bilan o'xashash, faqat harf katta kichikligini ahamiyati bo'lmaydi</li>
+</ul>
+<p>Ismi zod bilan tugaydigan foydalanuvchilarni chiqaring</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; User.objects.filter(username__endswith=&#39;zod&#39;)
+&lt;QuerySet [&lt;User: Bekzod&gt;, &lt;User: Sherzod&gt;]&gt;
+</code></pre></div>
+<p>Ismi a dan boshlanadigan foydalanuvchilarni chiqaring</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; User.objects.filter(username__startswith=&#39;a&#39;)
+&lt;QuerySet [&lt;User: admin&gt;, &lt;User: Asror&gt;, &lt;User: Akbar&gt;]&gt;
+</code></pre></div>
+<p>SQLite da startwith bilan istartswith bir hil ishlaydi</p>
+<p><strong>Vazifa</strong></p>
+<ol>
+<li>Nomi ka bilan boshlanadigan loyihalarni chiqaring</li>
+<li>Nomi .uz bilan tugaydigan loyihalarni chiqaring</li>
+<li>Rasmi .png bilan tugaydigan foydalanuvchilarni chiqaring</li>
+</ol>
+<h6 id="2314-range">2.3.14 range<a class="headerlink" href="#2314-range" title="Permanent link">&para;</a></h6>
+<p>range ikki qiymat orasida yotishini tekshiradi</p>
+<p>01.01.2022 dan 08.08.202 oraliqda ro'yxatdan o'tgan dasturchilarni chiqaring</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; [(pr.created, pr.user) for pr in Profile.objects.filter(created__range=(date(day=6,month=7,year=2022),date(day=6,mon
+th=7,year=2022)))]
+[(datetime.date(2022, 7, 6), &lt;User: Asror&gt;), (datetime.date(2022, 7, 6), &lt;User: Murod&gt;)]
+</code></pre></div>
+<p><strong>Vazifa</strong></p>
+<ol>
+<li>Ovozlar soni 100 bilan 500 oraliqda bo'lgan loyihalarni chiqaring</li>
+</ol>
+<h6 id="2315-date">2.3.15 date<a class="headerlink" href="#2315-date" title="Permanent link">&para;</a></h6>
+<h6 id="2316-year">2.3.16 year<a class="headerlink" href="#2316-year" title="Permanent link">&para;</a></h6>
+<h6 id="2317-iso_year">2.3.17 iso_year<a class="headerlink" href="#2317-iso_year" title="Permanent link">&para;</a></h6>
+<h6 id="2318-month">2.3.18 month<a class="headerlink" href="#2318-month" title="Permanent link">&para;</a></h6>
+<h6 id="2319-day">2.3.19 day<a class="headerlink" href="#2319-day" title="Permanent link">&para;</a></h6>
+<h6 id="2320-week">2.3.20 week<a class="headerlink" href="#2320-week" title="Permanent link">&para;</a></h6>
+<h6 id="2321-week_day">2.3.21 week_day<a class="headerlink" href="#2321-week_day" title="Permanent link">&para;</a></h6>
+<h6 id="2322-iso_week_day">2.3.22 iso_week_day<a class="headerlink" href="#2322-iso_week_day" title="Permanent link">&para;</a></h6>
+<h6 id="2323-quarter">2.3.23 quarter<a class="headerlink" href="#2323-quarter" title="Permanent link">&para;</a></h6>
+<p>Yuqoridagi shartlar sana bilan ishlaydi:</p>
+<ul>
+<li>date solishtirish uchun sanani olib beradi</li>
+<li>year solishtirish uchun yilni olib beradi</li>
+<li>month solishtirish uchun oyni olib beradi</li>
+<li>day solishtirish uchun kunni olib beradi</li>
+<li>week solishtirish uchun yildagi hafta tartibini (1-52/53) olib beradi</li>
+<li>week_day solishtirish uchun hafta kunini (1-yakshanba, 7-dushanba) olib beradi</li>
+<li>iso_week_day solishtirish uchun hafta kunini (1-dushanba,7-yakshanba) olib beradi</li>
+<li>quarter solishtirish uchun fasl tartibini olib beradi (1-4)</li>
+</ul>
+<p><strong>Vazifa</strong></p>
+<ol>
+<li>2022 yilda ro'yxatdan o'tgan foydalanuvchilarni chiqaring</li>
+<li>aprel oyida ro'yxatdan o'tgan foydalanuvchilarni chiqaring</li>
+<li>10 sanada ro'yxatdan o'tgan foydalanuvchilarni chiqaring</li>
+<li>sanasi 10gacha ro'yxatdan o'tgan foydalanuvchilarni chiqaring</li>
+</ol>
+<h6 id="2324-time">2.3.24 time<a class="headerlink" href="#2324-time" title="Permanent link">&para;</a></h6>
+<h6 id="2325-hour">2.3.25 hour<a class="headerlink" href="#2325-hour" title="Permanent link">&para;</a></h6>
+<h6 id="2326-second">2.3.26 second<a class="headerlink" href="#2326-second" title="Permanent link">&para;</a></h6>
+<p>Yuqoridagi shartlar vaqt bilan ishlaydi.</p>
+<ul>
+<li>time solishtirish uchun vaqtni olib beradi</li>
+<li>hour solishtirish uchun soatni olib beradi</li>
+<li>minute solishtirish uchun daqiqani olib beradi</li>
+<li>second solishtirish uchun soniyani olib beradi</li>
+</ul>
+<p><strong>Vazifa</strong></p>
+<ol>
+<li>Bugun yuborilgan habarlarni chiqaring</li>
+<li>Soat 14 da yuborilgan habarlanri chiqaring</li>
+<li>Soat 9-12 oraliqda yuborilgan habarlarni chiqaring</li>
+<li>12.7.2022 sanada 9-12 oraliqda yuborilgan habarlarni chiqaring</li>
+</ol>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2023 PayTechUz
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://t.me/+7Gn-JZ99TfgwZDNi" target="_blank" rel="noopener" title="Telegram" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M248 8C111.033 8 0 119.033 0 256s111.033 248 248 248 248-111.033 248-248S384.967 8 248 8Zm114.952 168.66c-3.732 39.215-19.881 134.378-28.1 178.3-3.476 18.584-10.322 24.816-16.948 25.425-14.4 1.326-25.338-9.517-39.287-18.661-21.827-14.308-34.158-23.215-55.346-37.177-24.485-16.135-8.612-25 5.342-39.5 3.652-3.793 67.107-61.51 68.335-66.746.153-.655.3-3.1-1.154-4.384s-3.59-.849-5.135-.5q-3.283.746-104.608 69.142-14.845 10.194-26.894 9.934c-8.855-.191-25.888-5.006-38.551-9.123-15.531-5.048-27.875-7.717-26.8-16.291q.84-6.7 18.45-13.7 108.446-47.248 144.628-62.3c68.872-28.647 83.183-33.623 92.511-33.789 2.052-.034 6.639.474 9.61 2.885a10.452 10.452 0 0 1 3.53 6.716 43.765 43.765 0 0 1 .417 9.769Z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://github.com/hoosnick/rest-api-framework-book" target="_blank" rel="noopener" title="GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand"], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Buferga nusxalandi", "clipboard.copy": "Buferga nusxalash", "search.result.more.one": "Ushbu sahifada yana 1 ta natija", "search.result.more.other": "Bu sahifada yana # ta natija", "search.result.none": "Mos natijalar yo\u0027q", "search.result.one": "1 ta mos natija", "search.result.other": "# ta mos keladigan natijalar", "search.result.placeholder": "Qidiruvni boshlash uchun kiriting", "search.result.term.missing": "To\u0027ldirilmagan", "select.version": "Versiyani tanlang"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.aecac24b.min.js"></script>
+      
+    
+  </body>
+</html>
